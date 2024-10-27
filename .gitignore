@@ -80,9 +80,6 @@ crashlytics-build.properties
 /Assets/Ultimate Game Music Collection/
 /Assets/Ultimate SFX Bundle - HD Remaster/
 /Assets/unity-chan!/
-/Assets/vFolders/
-/Assets/vHierarchy/
-/Assets/vInspector/
 /Assets/Zombie/
 
 Assets/Epic Toon FX.meta
@@ -93,7 +90,4 @@ Assets/OrdosFX.meta
 Assets/Ultimate Game Music Collection.meta
 Assets/Ultimate SFX Bundle - HD Remaster.meta
 Assets/unity-chan!.meta
-Assets/vFolders.meta
-Assets/vHierarchy.meta
-Assets/vInspector.meta
 Assets/Zombie.meta

@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9752b0c8e144801967e6897679604b, type: 3}
+  m_Name: vHierarchy Data
+  m_EditorClassIdentifier: 
+  sceneDatas_byGuid:
+    keys:
+    - 9fc0d4010bbf28b4594072e72b8655ab
+    - f39ae5644f60b664c9fe35fb09fd879a
+    - 3196eb576d5099c4cbcbb0ce6a225ec2
+    - 21f6f9480c0fcba4f9630576860e65e4
+    values:
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-8249502346567190636-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-3035210889207288922-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-390469701-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-705507993-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-963194225-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-1428628549-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-1985071176-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-1769367589-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-17519544706039503113-1215539741
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-2865028399606961730-650675093
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-8462201633631291965-9191363931335449524
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-62408661-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-2865028399606961730-212236458
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-7003250623620706113-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-8462201633631291965-2126857338
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-8462201635011530311-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-4092468619283661220-6882288416762423327
+        values:
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 0
+          iconNameOrGuid: Light Icon
+        - colorIndex: 0
+          iconNameOrGuid: Camera Icon
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 0
+          iconNameOrGuid: Terrain Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-f39ae5644f60b664c9fe35fb09fd879a-776801774-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f39ae5644f60b664c9fe35fb09fd879a-1552136897-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f39ae5644f60b664c9fe35fb09fd879a-1206569651-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f39ae5644f60b664c9fe35fb09fd879a-353302762-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f39ae5644f60b664c9fe35fb09fd879a-1383562575-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f39ae5644f60b664c9fe35fb09fd879a-925641515-0
+        values:
+        - colorIndex: 0
+          iconNameOrGuid: Camera Icon
+        - colorIndex: 0
+          iconNameOrGuid: Light Icon
+        - colorIndex: 0
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 0
+          iconNameOrGuid: Terrain Icon
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-1242386592-0
+        - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-1226062397-0
+        - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-694873487-0
+        - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-1120694538-0
+        - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-976600420-0
+        - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-582484534-0
+        values:
+        - colorIndex: 0
+          iconNameOrGuid: Camera Icon
+        - colorIndex: 0
+          iconNameOrGuid: Light Icon
+        - colorIndex: 0
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 0
+          iconNameOrGuid: Terrain Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-21f6f9480c0fcba4f9630576860e65e4-1687311599-0
+        - globalObjectIdString: GlobalObjectId_V1-2-21f6f9480c0fcba4f9630576860e65e4-955125622-0
+        - globalObjectIdString: GlobalObjectId_V1-2-21f6f9480c0fcba4f9630576860e65e4-865364084-0
+        - globalObjectIdString: GlobalObjectId_V1-2-21f6f9480c0fcba4f9630576860e65e4-348025988-0
+        - globalObjectIdString: GlobalObjectId_V1-2-21f6f9480c0fcba4f9630576860e65e4-542169047-0
+        values:
+        - colorIndex: 0
+          iconNameOrGuid: Camera Icon
+        - colorIndex: 0
+          iconNameOrGuid: Light Icon
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 0
+          iconNameOrGuid: Settings Icon
