@@ -35,7 +35,7 @@ public class MainSceneManager : Singleton<MainSceneManager> {
         seSource = camera.GetComponents<AudioSource>()[1];
         loadGaugeAnimatorObject = loadGaugeObject.transform.GetChild(1).gameObject;
         loadGaugeFillImage = loadGaugeAnimatorObject.transform.GetChild(1).GetComponent<Image>();
-        optionWindowTransform = optionObject.transform.GetChild(0);
+        optionWindowTransform = optionObject.transform.GetChild(1);
         optionBgmSlider = optionWindowTransform.GetChild(2).GetComponent<Slider>();
         optionSeSlider = optionWindowTransform.GetChild(3).GetComponent<Slider>();
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class AuraRelease : MonoBehaviour, IAbility {
+public class PheonixSlash : MonoBehaviour, IAbility {
 
     [field: Header("Status")]
     [field: SerializeField] public float cooldown { get; set; } = 5f;
@@ -13,18 +13,16 @@ public class AuraRelease : MonoBehaviour, IAbility {
 
     [field: Header("Option")]
     [field: SerializeField] public float operatingSpeed { get; set; } = 1.0f;
-    [field: SerializeField] public float operatingTime { get; set; } = 2.15f;
-    [field: SerializeField] public float chargeTime = 0.5f;
-    [field: SerializeField] public float castingTime = 1.4f;
-    [field: SerializeField] public float firstParticleLivingTime = 1.0f;
-    [field: SerializeField] public float secondParticleLivingTime = 1.0f;
+    [field: SerializeField] public float operatingTime { get; set; } = 2.0f;
+    [field: SerializeField] public float castingTime = 0.8f;
+    [field: SerializeField] public float firstParticleLivingTime = 1f;
+    [field: SerializeField] public float secondParticleLivingTime = 2.5f;
 
 
 
     [field: Header("Object")]
     [field: SerializeField] public GameObject[] projectiles = new GameObject[2];
-    [field: SerializeField] public AudioClip firstSwordSwingSound;
-    [field: SerializeField] public AudioClip secondSwordSwingSound;
+    [field: SerializeField] public AudioClip swordSwingSound;
 
 
 
@@ -53,61 +51,45 @@ public class AuraRelease : MonoBehaviour, IAbility {
     }
     
     public IEnumerator CUseAbility_RunAnimation(Player player) {
-        player.animator.SetBool("isUsingAbility_AuraRelease", true);
+        player.animator.SetBool("isUsingAbility_PheonixSlash", true);
         player.animator.SetFloat("usingAbilitySpeed", operatingSpeed);
 
         float time = operatingTime / operatingSpeed;
         yield return new WaitForSeconds(time);
 
-        player.animator.SetBool("isUsingAbility_AuraRelease", false);
+        player.animator.SetBool("isUsingAbility_PheonixSlash", false);
     }
 
     public IEnumerator CUseAbility_GenerateParticle(Player player) {
         Transform playerTransform = player.transform;
 
-        float time = chargeTime / operatingSpeed;
+        float time = castingTime / operatingSpeed;
         yield return new WaitForSeconds(time);
 
         if (player.IsDead) yield break;
 
 
 
-        Vector3 firstPosition = playerTransform.transform.position;
-        firstPosition.y += 1.5f;
+        Vector3 position = playerTransform.transform.position;
+        position.y += 1.5f;
 
-        GameObject firstParticle = Instantiate(projectiles[0], firstPosition, playerTransform.transform.rotation);
+        GameObject firstParticle = Instantiate(projectiles[0], position, playerTransform.transform.rotation);
+        GameObject secondParticle = Instantiate(projectiles[1], position, playerTransform.transform.rotation);
+        Pheonix02 pheonix02 = secondParticle.GetComponent<Pheonix02>();
+        pheonix02.caster = player.gameObject;
+        pheonix02.damage = damage;
 
         StartCoroutine(CUseAbility_UpdateParticlePosition(firstParticle.transform, playerTransform));
 
         Destroy(firstParticle, firstParticleLivingTime);
-
-
-
-        time = castingTime / operatingSpeed - chargeTime / operatingSpeed;
-        yield return new WaitForSeconds(time);
-
-        if (player.IsDead) yield break;
-
-
-
-        Vector3 secondPosition = playerTransform.transform.position;
-        secondPosition.y += 1.5f;
-
-        GameObject secondParticle = Instantiate(projectiles[1], secondPosition, playerTransform.transform.rotation);
-        Aura02 aura02 = secondParticle.GetComponent<Aura02>();
-        aura02.caster = player.gameObject;
-        aura02.damage = damage;
-
-        /*
-        Rigidbody rigidbody = secondParticle.AddComponent<Rigidbody>();
-        rigidbody.useGravity = false;
-        rigidbody.AddForce(playerTransform.transform.forward * moveSpeed);
-        */
-
-        StartCoroutine(CUseAbility_UpdateParticlePosition(secondParticle.transform, playerTransform));
-
         Destroy(secondParticle, secondParticleLivingTime);
 
+
+
+        time = 1.0f;
+        yield return new WaitForSeconds(time);
+
+        secondParticle.GetComponent<BoxCollider>().enabled = false;
     }
 
     public IEnumerator CUseAbility_UpdateParticlePosition(Transform particleTransform, Transform playerTransform) {
@@ -123,29 +105,15 @@ public class AuraRelease : MonoBehaviour, IAbility {
     public IEnumerator CUseAbility_MakeSound(Player player) {
         AudioSource audioSource = player.Sword.GetComponent<AudioSource>();
 
-        float time = chargeTime / operatingSpeed;
+        float time = castingTime / operatingSpeed;
         yield return new WaitForSeconds(time);
 
         if (player.IsDead) yield break;
 
 
 
-        audioSource.clip = firstSwordSwingSound;
+        audioSource.clip = swordSwingSound;
         audioSource.volume = PlayerPrefs.GetFloat("Option_SEVolume");
         audioSource.Play();
-
-
-
-        time = castingTime / operatingSpeed - chargeTime / operatingSpeed;
-        yield return new WaitForSeconds(time);
-
-        if (player.IsDead) yield break;
-
-
-
-        audioSource.clip = secondSwordSwingSound;
-        audioSource.volume = PlayerPrefs.GetFloat("Option_SEVolume");
-        audioSource.Play();
-        
     }
 }

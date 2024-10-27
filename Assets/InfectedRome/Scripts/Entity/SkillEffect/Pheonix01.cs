@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Aura01 : MonoBehaviour {
-	
+public class Pheonix01 : MonoBehaviour {
+
     [Header("Option")]
-    public float size = 0.4f;
+    public float size = 1f;
 
     private void Start() {
         GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Option_SEVolume");

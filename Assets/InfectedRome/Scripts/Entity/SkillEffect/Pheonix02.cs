@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Aura02 : MonoBehaviour {
+public class Pheonix02 : MonoBehaviour {
 
     [Header("Option")]
-    public float size = 0.6f;
+    public float size = 1f;
 
 
 
@@ -23,7 +23,7 @@ public class Aura02 : MonoBehaviour {
             float z = transform.localScale.z;
             transform.localScale = new Vector3(x * size, y * size, z * size);
         }
-        GetComponent<SphereCollider>().radius *= size;
+        GetComponent<BoxCollider>().size *= size;
     }
 
 

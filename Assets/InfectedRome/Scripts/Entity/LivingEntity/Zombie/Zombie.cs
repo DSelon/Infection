@@ -324,6 +324,7 @@ public class Zombie : MonoBehaviour, ILivingEntity {
     public void Die() {
         IsDead = true;
 
+        GetComponent<Collider>().enabled = false;
         animator.SetBool("isDead", true);
 
         navMeshAgent.speed = 0.0f;

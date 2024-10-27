@@ -25,7 +25,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     private void Start() {
         bgmSource = camera.GetComponents<AudioSource>()[0];
         seSource = camera.GetComponents<AudioSource>()[1];
-        pauseWindowTransform = pauseObject.transform.GetChild(0);
+        pauseWindowTransform = pauseObject.transform.GetChild(1);
         pauseBackToGameButton = pauseWindowTransform.GetChild(0).gameObject;
         pauseExitToMainButton = pauseWindowTransform.GetChild(1).gameObject;
 

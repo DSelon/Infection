@@ -333,6 +333,7 @@ public class Player : MonoBehaviour, ILivingEntity {
         for (int i = 0; i < abilityBundleChildCount; i++) abilities[i] = abilityBundleTransform.GetChild(i).GetComponent<IAbility>();
 
         equippedAbilities[0] = abilities[0];
+        equippedAbilities[1] = abilities[1];
 
         Transform coolGaugeBundleTransform = AbilityCoolGaugeBundle.transform;
         int coolGaugeBundleChildCount = coolGaugeBundleTransform.childCount;
@@ -358,6 +359,7 @@ public class Player : MonoBehaviour, ILivingEntity {
 
         // 능력 사용
         if (input.useAbility[0]) UseAbility(0);
+        if (input.useAbility[1]) UseAbility(1);
     }
 
 
@@ -366,6 +368,14 @@ public class Player : MonoBehaviour, ILivingEntity {
     
     // 능력 사용
     public void UseAbility(int number) {
+        for (int i = 0; i < equippedAbilities.Length; i++) {
+            if (equippedAbilities[i] == null) continue;
+
+            IAbility ability = equippedAbilities[i];
+
+            if (ability.currentCooldown < (ability.operatingTime / ability.operatingSpeed)) return;
+        }
+
         equippedAbilities[number].UseAbility(this);
 
         StartCoroutine(CUseAbility_RunCooldownUI(number));

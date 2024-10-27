@@ -1044,7 +1044,7 @@ MonoBehaviour:
   power: 10
   attackSpeed: 1
   attackTime: 0.3
-  detectDistance: 30
+  detectDistance: 100
   attackDistance: 1
   target: {fileID: 0}
   exp: {fileID: 2181183702442550740, guid: f584333630bfea8488e3dc70cc01a70e, type: 3}

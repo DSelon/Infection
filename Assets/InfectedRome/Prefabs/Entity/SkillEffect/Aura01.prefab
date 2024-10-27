@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221480422968040}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.8577856, z: 0, w: -0.51400775}
+  m_LocalRotation: {x: 0, y: 0.925024, z: 0, w: 0.37990874}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4969,7 +4969,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325518941055930}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.81478876, z: 0, w: 0.57975787}
+  m_LocalRotation: {x: 0, y: -0.9519919, z: 0, w: -0.30612314}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10051,7 +10051,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   LightColor:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10095,8 +10095,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4850408420471750}
-  - component: {fileID: 6773685301687215283}
-  - component: {fileID: 150126374019172394}
+  - component: {fileID: 7398547067320987753}
+  - component: {fileID: -6511950947709574926}
   m_Layer: 0
   m_Name: Aura01
   m_TagString: Untagged
@@ -10122,7 +10122,7 @@ Transform:
   - {fileID: 4097065627519832}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &6773685301687215283
+--- !u!82 &7398547067320987753
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10134,7 +10134,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10218,7 +10218,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &150126374019172394
+--- !u!114 &-6511950947709574926
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

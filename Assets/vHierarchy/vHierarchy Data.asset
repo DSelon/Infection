@@ -38,6 +38,8 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-8462201633631291965-2126857338
         - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-8462201635011530311-0
         - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-4092468619283661220-6882288416762423327
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-3360066643977229717-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-788607290-0
         values:
         - colorIndex: 0
           iconNameOrGuid: AvatarMask On Icon
@@ -63,6 +65,10 @@ MonoBehaviour:
           iconNameOrGuid: AvatarMask On Icon
         - colorIndex: 0
           iconNameOrGuid: Settings Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: AvatarMask On Icon
         - colorIndex: 0
           iconNameOrGuid: AvatarMask On Icon
         - colorIndex: 0
