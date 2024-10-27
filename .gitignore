@@ -70,3 +70,30 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Custom Asset Resources
+/Assets/Epic Toon FX/
+/Assets/Fantasy RPG Icons Pack/
+/Assets/MedievalKingdomUI/
+/Assets/Nodachi_Animset/
+/Assets/OrdosFX/
+/Assets/Ultimate Game Music Collection/
+/Assets/Ultimate SFX Bundle - HD Remaster/
+/Assets/unity-chan!/
+/Assets/vFolders/
+/Assets/vHierarchy/
+/Assets/vInspector/
+/Assets/Zombie/
+
+Assets/Epic Toon FX.meta
+Assets/Fantasy RPG Icons Pack.meta
+Assets/MedievalKingdomUI.meta
+Assets/Nodachi_Animset.meta
+Assets/OrdosFX.meta
+Assets/Ultimate Game Music Collection.meta
+Assets/Ultimate SFX Bundle - HD Remaster.meta
+Assets/unity-chan!.meta
+Assets/vFolders.meta
+Assets/vHierarchy.meta
+Assets/vInspector.meta
+Assets/Zombie.meta
