@@ -334,6 +334,7 @@ public class Player : MonoBehaviour, ILivingEntity {
 
         equippedAbilities[0] = abilities[0];
         equippedAbilities[1] = abilities[1];
+        equippedAbilities[2] = abilities[2];
 
         Transform coolGaugeBundleTransform = AbilityCoolGaugeBundle.transform;
         int coolGaugeBundleChildCount = coolGaugeBundleTransform.childCount;
@@ -360,6 +361,7 @@ public class Player : MonoBehaviour, ILivingEntity {
         // 능력 사용
         if (input.useAbility[0]) UseAbility(0);
         if (input.useAbility[1]) UseAbility(1);
+        if (input.useAbility[2]) UseAbility(2);
     }
 
 

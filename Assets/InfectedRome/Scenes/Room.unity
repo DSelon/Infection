@@ -179,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: abb315a107d77a944b94716a2eda6c34, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e0f4c58ba83d4924d9a92943327992dd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2792,6 +2792,7 @@ Transform:
   m_Children:
   - {fileID: 162060380}
   - {fileID: 1999115068}
+  - {fileID: 1781102639}
   m_Father: {fileID: 788607292}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &551091067
@@ -3168,7 +3169,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: abb315a107d77a944b94716a2eda6c34, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 866ae5d47b649c74b9b54e5d7087bab7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5159,7 +5160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1323599373
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6685,6 +6686,58 @@ Transform:
   - {fileID: 5880523505618506160}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1781102638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1781102639}
+  - component: {fileID: 1781102640}
+  m_Layer: 0
+  m_Name: ElectricWhirlwind
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1781102639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781102638}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 546139026}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1781102640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781102638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4051b9b45daef07489c894a42d9e53f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <cooldown>k__BackingField: 5
+  <damage>k__BackingField: 50
+  <operatingSpeed>k__BackingField: 1
+  <operatingTime>k__BackingField: 1.5
+  castingTime: 0.5
+  particleLivingTime: 3.5
+  projectile: {fileID: 1646871050452766, guid: a6af6edb2d13c774298f96990554bbd7, type: 3}
+  swordSwingSound: {fileID: 8300000, guid: 6b92b1cf775ab4a4198ea689ffc9966e, type: 3}
 --- !u!1 &1794620238
 GameObject:
   m_ObjectHideFlags: 0
@@ -7443,7 +7496,7 @@ MonoBehaviour:
   projectiles:
   - {fileID: 1543153927702632, guid: 56fb87ebb57337f478957258a945a44e, type: 3}
   - {fileID: 1543153927702632, guid: 19d953f13f69cba4eb38125903cb9bf2, type: 3}
-  swordSwingSound: {fileID: 8300000, guid: 6c2c49a608e2baa4fa2faa1c765ff552, type: 3}
+  swordSwingSound: {fileID: 8300000, guid: 155af4d7e5a6a76479ec7b41179da6ca, type: 3}
 --- !u!1 &2084478449
 GameObject:
   m_ObjectHideFlags: 0
