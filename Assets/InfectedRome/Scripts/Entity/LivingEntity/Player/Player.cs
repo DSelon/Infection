@@ -4,6 +4,23 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour, ILivingEntity {
 
+    public enum SurvivalState {
+        Alive,
+        Dead
+    }
+
+    public enum MovementState {
+        Idle,
+        Running
+    }
+
+    public enum CrowdControlState {
+        Normal,
+        Stunned
+    }
+
+
+
     [Header("Status")]
     [SerializeField] private float maxHealth = 100.0f;
     public float MaxHealth {
@@ -120,6 +137,18 @@ public class Player : MonoBehaviour, ILivingEntity {
 
     }
     
+    private SurvivalState _survivalState;
+    public SurvivalState survivalState {
+
+        get {
+            return _survivalState;
+        }
+
+        set {
+            _survivalState = value;
+        }
+
+    }
     private bool isDead;
     public bool IsDead {
 
