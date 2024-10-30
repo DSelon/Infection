@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Pheonix02 : MonoBehaviour {
 
-    [Header("Option")]
-    public float size = 1f;
+    public float size { get; set; } = 1f;
 
 
 

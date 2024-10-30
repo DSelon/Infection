@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface ILivingEntity {
 	
     float MaxHealth { get; set; }
@@ -11,4 +13,5 @@ public interface ILivingEntity {
     void Heal(float amount);
     void Damage(float amount);
     void Die();
+
 }

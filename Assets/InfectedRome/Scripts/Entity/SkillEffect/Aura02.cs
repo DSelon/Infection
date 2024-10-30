@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Aura02 : MonoBehaviour {
 
-    [Header("Option")]
-    public float size = 0.6f;
+    public float size { get; set; } = 0.6f;
 
 
 

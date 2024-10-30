@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Aura01 : MonoBehaviour {
 	
-    [Header("Option")]
-    public float size = 0.4f;
+    public float size { get; set; } = 0.4f;
 
     private void Start() {
         GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Option_SEVolume");

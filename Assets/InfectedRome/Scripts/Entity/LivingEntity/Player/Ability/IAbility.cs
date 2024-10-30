@@ -1,9 +1,8 @@
 public interface IAbility {
 
-    float cooldown { get; set; }
-    float damage { get; set; }
-
+    float maxCooldown { get; set; }
     float currentCooldown { get; set; }
+    float damage { get; set; }
 
     float operatingSpeed { get; set; }
     float operatingTime { get; set; }

@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Electric01 : MonoBehaviour {
 
-    [Header("Option")]
-    public float size = 1f;
+    public float size { get; set; } = 1f;
 
 
 
@@ -27,14 +26,14 @@ public class Electric01 : MonoBehaviour {
     }
 
 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerStay(Collider other) {
         GameObject otherGameObject = other.gameObject;
         if (otherGameObject == caster) return;
 
         ILivingEntity livingEntity = otherGameObject.GetComponent<ILivingEntity>();
         if (livingEntity == null) return;
 
-        livingEntity.Damage(damage);
+        livingEntity.Damage(damage * Time.deltaTime);
     }
 
 }

@@ -1,28 +1,17 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour, ILivingEntity {
 
-    public enum SurvivalState {
-        Alive,
-        Dead
-    }
-
-    public enum MovementState {
-        Idle,
-        Running
-    }
-
-    public enum CrowdControlState {
-        Normal,
-        Stunned
-    }
+    // Event
+    public Action PlayerDeath;
 
 
 
-    [Header("Status")]
-    [SerializeField] private float maxHealth = 100.0f;
+    // Status
+    private float maxHealth = 100.0f;
     public float MaxHealth {
 
         get {
@@ -37,8 +26,8 @@ public class Player : MonoBehaviour, ILivingEntity {
             if (CurrentHealth > maxHealth) CurrentHealth = maxHealth;
 
             // UI 갱신
-            PlayerInfo_hp_fill.fillAmount = CurrentHealth / maxHealth;
-            PlayerInfo_hp_text.text = (int) CurrentHealth + " / " + (int) maxHealth;
+            HpFill.fillAmount = CurrentHealth / maxHealth;
+            HpText.text = (int) CurrentHealth + " / " + (int) maxHealth;
         }
 
     }
@@ -55,10 +44,58 @@ public class Player : MonoBehaviour, ILivingEntity {
             currentHealth = value > maxHealth ? maxHealth : value;
 
             // UI 갱신
-            PlayerInfo_hp_fill.fillAmount = currentHealth / MaxHealth;
-            PlayerInfo_hp_text.text = (int) currentHealth + " / " + (int) MaxHealth;
+            HpFill.fillAmount = currentHealth / MaxHealth;
+            HpText.text = (int) currentHealth + " / " + (int) MaxHealth;
 
             if (currentHealth == 0) Die();
+        }
+
+    }
+    private float moveSpeed = 5.0f;
+    public float MoveSpeed {
+
+        get {
+            return moveSpeed;
+        }
+
+        set {
+            moveSpeed = value;
+        }
+
+    }
+    private bool isDead;
+    public bool IsDead {
+
+        get {
+            return isDead;
+        }
+
+        private set {
+            isDead = value;
+        }
+
+    }
+    private bool isOperating;
+    public bool IsOperating {
+
+        get {
+            return isOperating;
+        }
+
+        set {
+            isOperating = value;
+        }
+
+    }
+    private bool isCasting;
+    public bool IsCasting {
+
+        get {
+            return isCasting;
+        }
+
+        set {
+            isCasting = value;
         }
 
     }
@@ -75,7 +112,7 @@ public class Player : MonoBehaviour, ILivingEntity {
             level = value;
 
             // TODO: UI 갱신
-            PlayerInfo_level_text.text = (level + 1).ToString();
+            LevelText.text = (level + 1).ToString();
         }
     }
     private int[] maxExp = {
@@ -96,8 +133,8 @@ public class Player : MonoBehaviour, ILivingEntity {
             maxExp = value;
 
             // UI 갱신
-            PlayerInfo_exp_fill.fillAmount = (float) currentExp / maxExp[level];
-            PlayerInfo_exp_text.text = currentExp + " / " + maxExp[level];
+            ExpFill.fillAmount = (float) currentExp / maxExp[level];
+            ExpText.text = currentExp + " / " + maxExp[level];
 
             // 레벨 업
             if (currentExp >= MaxExp[level]) LevelUp();
@@ -117,55 +154,18 @@ public class Player : MonoBehaviour, ILivingEntity {
             currentExp = value;
 
             // UI 갱신
-            PlayerInfo_exp_fill.fillAmount = (float) currentExp / maxExp[level];
-            PlayerInfo_exp_text.text = currentExp + " / " + maxExp[level];
+            ExpFill.fillAmount = (float) currentExp / maxExp[level];
+            ExpText.text = currentExp + " / " + maxExp[level];
 
             // 레벨 업
             if (currentExp >= MaxExp[level]) LevelUp();
         }
     }
-    [SerializeField] private float moveSpeed = 5.0f;
-    public float MoveSpeed {
-
-        get {
-            return moveSpeed;
-        }
-
-        set {
-            moveSpeed = value;
-        }
-
-    }
-    
-    private SurvivalState _survivalState;
-    public SurvivalState survivalState {
-
-        get {
-            return _survivalState;
-        }
-
-        set {
-            _survivalState = value;
-        }
-
-    }
-    private bool isDead;
-    public bool IsDead {
-
-        get {
-            return isDead;
-        }
-
-        private set {
-            isDead = value;
-        }
-
-    }
     
 
 
-    [Header("Option")]
-    [SerializeField] private float cameraFollowSpeed = 5.0f;
+    // Option - Camera
+    private float cameraFollowSpeed = 5.0f;
     public float CameraFollowSpeed {
 
         get {
@@ -178,8 +178,8 @@ public class Player : MonoBehaviour, ILivingEntity {
 
     }
 
-    // Player Movement
-    [SerializeField] private float rotateSpeed = 50.0f;
+    // Option - Movement
+    private float rotateSpeed = 50.0f;
     public float RotateSpeed {
 
         get {
@@ -194,7 +194,7 @@ public class Player : MonoBehaviour, ILivingEntity {
     
 
 
-    [Header("Object")]
+    // Object - Camera
     [SerializeField] private GameObject camera;
     public GameObject Camera {
 
@@ -235,81 +235,81 @@ public class Player : MonoBehaviour, ILivingEntity {
     }
     public GameObject bloodParticle;
 
-    // UI
-    [SerializeField] private Text playerInfo_level_text;
-    public Text PlayerInfo_level_text {
+    // Object - UI
+    [SerializeField] private Text levelText;
+    public Text LevelText {
 
         get {
-            return playerInfo_level_text;
+            return levelText;
         }
 
         private set {
-            playerInfo_level_text = value;
+            levelText = value;
         }
 
     }
-    [SerializeField] private Image playerInfo_hp_fill;
-    public Image PlayerInfo_hp_fill {
+    [SerializeField] private Image hpFill;
+    public Image HpFill {
         
         get {
-            return playerInfo_hp_fill;
+            return hpFill;
         }
 
         private set {
-            playerInfo_hp_fill = value;
+            hpFill = value;
         }
 
     }
-    [SerializeField] private Text playerInfo_hp_text;
-    public Text PlayerInfo_hp_text {
+    [SerializeField] private Text hpText;
+    public Text HpText {
 
         get {
-            return playerInfo_hp_text;
+            return hpText;
         }
 
         private set {
-            playerInfo_hp_text = value;
+            hpText = value;
         }
 
     }
-    [SerializeField] private Image playerInfo_exp_fill;
-    public Image PlayerInfo_exp_fill {
+    [SerializeField] private Image expFill;
+    public Image ExpFill {
 
         get {
-            return playerInfo_exp_fill;
+            return expFill;
         }
 
         private set {
-            playerInfo_exp_fill = value;
+            expFill = value;
         }
 
     }
-    [SerializeField] private Text playerInfo_exp_text;
-    public Text PlayerInfo_exp_text {
+    [SerializeField] private Text expText;
+    public Text ExpText {
 
         get {
-            return playerInfo_exp_text;
+            return expText;
         }
 
         set {
-            playerInfo_exp_text = value;
+            expText = value;
         }
 
     }
-    [SerializeField] private GameObject abilityCoolGaugeBundle;
-    public GameObject AbilityCoolGaugeBundle {
+    [SerializeField] private GameObject abilityCoolBundle;
+    public GameObject AbilityCoolBundle {
 
         get {
-            return abilityCoolGaugeBundle;
+            return abilityCoolBundle;
         }
 
         private set {
-            abilityCoolGaugeBundle = value;
+            abilityCoolBundle = value;
         }
 
     }
     
-    // Sound
+    // Object - Sound
     public AudioClip[] hitSounds;
     public AudioClip deathSound;
     
@@ -332,7 +332,7 @@ public class Player : MonoBehaviour, ILivingEntity {
     public IAbility[] equippedAbilities { get; private set; } = new IAbility[4];
 
     // UI
-    public Image[] abilityCoolGaugeBundle_gauge_fills { get; set; } = new Image[4];
+    public Image[] abilityCoolFills { get; set; } = new Image[4];
 
 
 
@@ -340,9 +340,11 @@ public class Player : MonoBehaviour, ILivingEntity {
 
     private void Start() {
         CurrentHealth = MaxHealth;
+        IsDead = MaxHealth > 0 ? false : true;
+        IsOperating = false;
+        IsCasting = false;
         Level = 0;
         CurrentExp = 0;
-        IsDead = MaxHealth > 0 ? false : true;
         
 
 
@@ -355,19 +357,17 @@ public class Player : MonoBehaviour, ILivingEntity {
         animator = GetComponent<Animator>();
         source = GetComponent<AudioSource>();
 
-
         Transform abilityBundleTransform = AbilityBundle.transform;
         int abilityBundleChildCount = abilityBundleTransform.childCount;
         abilities = new IAbility[abilityBundleChildCount];
         for (int i = 0; i < abilityBundleChildCount; i++) abilities[i] = abilityBundleTransform.GetChild(i).GetComponent<IAbility>();
-
         equippedAbilities[0] = abilities[0];
         equippedAbilities[1] = abilities[1];
         equippedAbilities[2] = abilities[2];
 
-        Transform coolGaugeBundleTransform = AbilityCoolGaugeBundle.transform;
-        int coolGaugeBundleChildCount = coolGaugeBundleTransform.childCount;
-        for (int i = 0; i < coolGaugeBundleChildCount; i++) abilityCoolGaugeBundle_gauge_fills[i] = coolGaugeBundleTransform.GetChild(i).GetChild(2).GetComponent<Image>();
+        Transform abilityCoolBundleTransform = AbilityCoolBundle.transform;
+        int abilityCoolBundleChildCount = abilityCoolBundleTransform.childCount;
+        for (int i = 0; i < abilityCoolBundleChildCount; i++) abilityCoolFills[i] = abilityCoolBundleTransform.GetChild(i).GetChild(2).GetComponent<Image>();
     }
 
     private void Update() {
@@ -379,13 +379,21 @@ public class Player : MonoBehaviour, ILivingEntity {
         // 카메라 추적
         movement.FollowCamera(this, Camera.transform.position);
 
+
+
         // 플레이어가 사망했을 경우
         if (IsDead) return;
-
-
+        
+        // 플레이어가 능력을 시전 중일 경우
+        if (IsCasting) return;
 
         // 이동
         movement.Move(this, input.horizontal, input.vertical);
+
+
+
+        // 플레이어가 능력을 사용 중일 경우
+        if (IsOperating) return;
 
         // 능력 사용
         if (input.useAbility[0]) UseAbility(0);
@@ -399,14 +407,6 @@ public class Player : MonoBehaviour, ILivingEntity {
     
     // 능력 사용
     public void UseAbility(int number) {
-        for (int i = 0; i < equippedAbilities.Length; i++) {
-            if (equippedAbilities[i] == null) continue;
-
-            IAbility ability = equippedAbilities[i];
-
-            if (ability.currentCooldown < (ability.operatingTime / ability.operatingSpeed)) return;
-        }
-
         equippedAbilities[number].UseAbility(this);
 
         StartCoroutine(CUseAbility_RunCooldownUI(number));
@@ -414,11 +414,12 @@ public class Player : MonoBehaviour, ILivingEntity {
     
     private IEnumerator CUseAbility_RunCooldownUI(int number) {
         IAbility ability = equippedAbilities[number];
-        Image image = abilityCoolGaugeBundle_gauge_fills[number];
-        while (true) {
-            image.fillAmount = 1 - ability.currentCooldown / ability.cooldown;
+        Image image = abilityCoolFills[number];
 
-            if (ability.currentCooldown == ability.cooldown) break;
+        while (true) {
+            image.fillAmount = 1 - ability.currentCooldown / ability.maxCooldown;
+
+            if (ability.currentCooldown == ability.maxCooldown) break;
 
             yield return null;
         }
@@ -428,10 +429,12 @@ public class Player : MonoBehaviour, ILivingEntity {
 
     // 레벨 업
     public void LevelUp() {
+        // 경험치 및 레벨 수치 적용
         CurrentExp -= MaxExp[level];
         Level += 1;
 
         // TODO: 레벨 업 효과
+
     }
 
     
@@ -440,11 +443,9 @@ public class Player : MonoBehaviour, ILivingEntity {
     public void Heal(float amount) {
         if (amount < 0) amount = 0;
 
-
-
+        // 현재 체력 수치 적용
         CurrentHealth = Mathf.Min(CurrentHealth + amount, MaxHealth);
     }
-
 
     // 피해
     public void Damage(float amount) {
@@ -452,14 +453,17 @@ public class Player : MonoBehaviour, ILivingEntity {
 
 
 
+        // 현재 체력 수치 적용
         CurrentHealth = Mathf.Max(CurrentHealth - amount, 0);
 
+        // 파티클 재생
         Vector3 particlePosition = transform.position;
         particlePosition.y += 1.0f;
         GameObject particle = Instantiate(bloodParticle, particlePosition, transform.rotation);
         Destroy(particle, 1.0f);
 
-        source.clip = hitSounds[Random.Range(0, hitSounds.Length)];
+        // 효과음 재생
+        source.clip = hitSounds[UnityEngine.Random.Range(0, hitSounds.Length)];
         source.volume = PlayerPrefs.GetFloat("Option_SEVolume");
         source.Play();
 
@@ -469,16 +473,20 @@ public class Player : MonoBehaviour, ILivingEntity {
         if (CurrentHealth <= 0) Die(); // 사망
     }
     
-
     // 사망
     public void Die() {
         IsDead = true;
 
+        // 효과음 재생
         source.clip = deathSound;
         source.volume = PlayerPrefs.GetFloat("Option_SEVolume");
         source.Play();
 
+        // 애니메이션 재생
         animator.SetBool("isDead", true);
+
+        // 플레이어 사망 이벤트 호출
+        PlayerDeath?.Invoke();
     }
 
 }

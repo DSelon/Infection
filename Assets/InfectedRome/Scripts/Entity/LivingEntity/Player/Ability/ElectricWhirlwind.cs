@@ -3,59 +3,65 @@ using UnityEngine;
 
 public class ElectricWhirlwind : MonoBehaviour, IAbility {
 
-    [field: Header("Status")]
-    [field: SerializeField] public float cooldown { get; set; } = 5f;
-    [field: SerializeField] public float damage { get; set; } = 50.0f;
-
+    // Status
+    public float maxCooldown { get; set; } = 5f;
     public float currentCooldown { get; set; }
+    public float damage { get; set; } = 50.0f;
 
 
 
-    [field: Header("Option")]
-    [field: SerializeField] public float operatingSpeed { get; set; } = 1.0f;
-    [field: SerializeField] public float operatingTime { get; set; } = 1.8f;
-    [field: SerializeField] public float castingTime = 1f;
-    [field: SerializeField] public float particleLivingTime = 3.5f;
+    // Option
+    public float operatingSpeed { get; set; } = 1.0f;
+    public float operatingTime { get; set; } = 2.1f;
+    public float castingTime { get; set; } = 0.5f;
+    public float particleLivingTime { get; set; } = 3.5f;
 
 
 
-    [field: Header("Object")]
-    [field: SerializeField] public GameObject projectile;
-    [field: SerializeField] public AudioClip swordSwingSound;
+    // Object
+    public GameObject skillEffects;
+    public AudioClip swordSwingSound;
 
 
 
 
 
     private void Start() {
-        currentCooldown = cooldown;
+        currentCooldown = maxCooldown;
     }
 
 
     private void Update() {
         if (Time.timeScale == 0) return;
         
-        currentCooldown = currentCooldown < cooldown ? currentCooldown + Time.deltaTime : cooldown;
+        currentCooldown = currentCooldown < maxCooldown ? currentCooldown + Time.deltaTime : maxCooldown;
     }
 
 
 
     public void UseAbility(Player player) {
-        if (currentCooldown < cooldown) return;
+
+        // 재사용 대기 시간일 경우
+        if (currentCooldown < maxCooldown) return;
+
         currentCooldown = 0;
 
         StartCoroutine(CUseAbility_RunAnimation(player));
         StartCoroutine(CUseAbility_GenerateParticle(player));
         StartCoroutine(CUseAbility_MakeSound(player));
+
     }
     
     public IEnumerator CUseAbility_RunAnimation(Player player) {
+        player.IsOperating = true;
+
+
 
         float time = castingTime / operatingSpeed;
         yield return new WaitForSeconds(time);
 
+        // 플레이어가 죽었을 경우
         if (player.IsDead) yield break;
-
         player.animator.SetBool("isUsingAbility_ElectricWhirlwind", true);
         player.animator.SetFloat("usingAbilitySpeed", operatingSpeed);
 
@@ -65,22 +71,22 @@ public class ElectricWhirlwind : MonoBehaviour, IAbility {
         yield return new WaitForSeconds(time);
 
         player.animator.SetBool("isUsingAbility_ElectricWhirlwind", false);
+
+        player.IsOperating = false;
     }
 
     public IEnumerator CUseAbility_GenerateParticle(Player player) {
         Transform playerTransform = player.transform;
 
+        // 파티클 재생
         Vector3 position = playerTransform.transform.position;
         position.y += 1.5f;
-
-        GameObject particle = Instantiate(projectile, position, playerTransform.transform.rotation);
+        GameObject particle = Instantiate(skillEffects, position, playerTransform.transform.rotation);
         Electric01 electric01 = particle.GetComponent<Electric01>();
         electric01.caster = player.gameObject;
         electric01.damage = damage;
         particle.GetComponent<SphereCollider>().enabled = false;
-
         StartCoroutine(CUseAbility_UpdateParticlePosition(particle.transform, playerTransform));
-
         Destroy(particle, particleLivingTime);
 
 
@@ -88,6 +94,13 @@ public class ElectricWhirlwind : MonoBehaviour, IAbility {
         float time = 1f;
         yield return new WaitForSeconds(time);
 
+        // 플레이어가 죽었을 경우
+        if (player.IsDead) {
+            Destroy(particle);
+            yield break;
+        }
+
+        // 파티클 충돌체 생성
         particle.GetComponent<SphereCollider>().enabled = true;
 
 
@@ -95,6 +108,7 @@ public class ElectricWhirlwind : MonoBehaviour, IAbility {
         time = 2f;
         yield return new WaitForSeconds(time);
 
+        // 파티클 충돌체 제거
         particle.GetComponent<SphereCollider>().enabled = false;
     }
 
@@ -111,18 +125,22 @@ public class ElectricWhirlwind : MonoBehaviour, IAbility {
     public IEnumerator CUseAbility_MakeSound(Player player) {
         AudioSource audioSource = player.Sword.GetComponent<AudioSource>();
 
+
+
         float time = castingTime / operatingSpeed;
         yield return new WaitForSeconds(time);
 
+        // 플레이어가 죽었을 경우
         if (player.IsDead) yield break;
 
         for (int i = 0; i < 5; i++) {
-
-            time = (operatingTime/ operatingSpeed) / 5;
+            time = (operatingTime/ operatingSpeed) / 7;
             yield return new WaitForSeconds(time);
 
+            // 플레이어가 죽었을 경우
             if (player.IsDead) yield break;
 
+            // 효과음 재생
             audioSource.clip = swordSwingSound;
             audioSource.volume = PlayerPrefs.GetFloat("Option_SEVolume");
             audioSource.Play();
