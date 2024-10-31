@@ -91,7 +91,7 @@ public class Zombie : MonoBehaviour, ILivingEntity, IMonster {
 
 
     // Option
-    private float attackSpeed = 1.0f;
+    private float attackSpeed;
     public float AttackSpeed {
 
         get {
@@ -103,7 +103,7 @@ public class Zombie : MonoBehaviour, ILivingEntity, IMonster {
         }
 
     }
-    private float attackTime = 0.3f;
+    private float attackTime;
     public float AttackTime {
 
         get {
@@ -115,7 +115,7 @@ public class Zombie : MonoBehaviour, ILivingEntity, IMonster {
         }
 
     }
-    private float detectDistance = 100.0f;
+    private float detectDistance;
     public float DetectDistance {
         
         get {
@@ -127,7 +127,7 @@ public class Zombie : MonoBehaviour, ILivingEntity, IMonster {
         }
 
     }
-    private float attackDistance = 1.0f;
+    private float attackDistance;
     public float AttackDistance {
         
         get {
@@ -172,6 +172,7 @@ public class Zombie : MonoBehaviour, ILivingEntity, IMonster {
 
     private void Start() {
         StatusInit();
+        OptionInit();
 
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -206,6 +207,14 @@ public class Zombie : MonoBehaviour, ILivingEntity, IMonster {
         AttackPower = 10.0f;
         IsDead = MaxHealth > 0 ? false : true;
         IsAttacking = false;
+    }
+
+    // 옵션 초기화
+    protected virtual void OptionInit() {
+        AttackSpeed = 1.0f;
+        AttackTime = 0.3f;
+        DetectDistance = 100.0f;
+        AttackDistance = 1.0f;
     }
     
     

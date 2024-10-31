@@ -27,9 +27,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
         // 키 입력이 없을 경우
-        if (!inputKey) {
-            return;
-        }
+        if (!inputKey) return;
 
 
         if (Mathf.Sign(player.transform.forward.x) != Mathf.Sign(direction.x)

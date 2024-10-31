@@ -99,6 +99,18 @@ public class Player : MonoBehaviour, ILivingEntity {
         }
 
     }
+    private bool isInvincibility;
+    public bool IsInvincibility {
+
+        get {
+            return isInvincibility;
+        }
+
+        set {
+            isInvincibility = value;
+        }
+
+    }
     private int level;
     public int Level {
 
@@ -364,6 +376,7 @@ public class Player : MonoBehaviour, ILivingEntity {
         equippedAbilities[0] = abilities[0];
         equippedAbilities[1] = abilities[1];
         equippedAbilities[2] = abilities[2];
+        equippedAbilities[3] = abilities[3];
 
         Transform abilityCoolBundleTransform = AbilityCoolBundle.transform;
         int abilityCoolBundleChildCount = abilityCoolBundleTransform.childCount;
@@ -396,9 +409,7 @@ public class Player : MonoBehaviour, ILivingEntity {
         if (IsOperating) return;
 
         // 능력 사용
-        if (input.useAbility[0]) UseAbility(0);
-        if (input.useAbility[1]) UseAbility(1);
-        if (input.useAbility[2]) UseAbility(2);
+        for (int i = 0; i < equippedAbilities.Length; i++) if (input.useAbility[i]) UseAbility(i);
     }
 
 
@@ -450,6 +461,8 @@ public class Player : MonoBehaviour, ILivingEntity {
     // 피해
     public void Damage(float amount) {
         if (amount < 0) amount = 0;
+
+        if (IsInvincibility) return;
 
 
 

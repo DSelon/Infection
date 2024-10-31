@@ -9,4 +9,12 @@ public class RedZombie : Zombie {
         IsAttacking = false;
     }
 
+    protected override void OptionInit()
+    {
+        AttackSpeed = 1.0f;
+        AttackTime = 0.3f;
+        DetectDistance = 100.0f;
+        AttackDistance = 1.5f;
+    }
+
 }
