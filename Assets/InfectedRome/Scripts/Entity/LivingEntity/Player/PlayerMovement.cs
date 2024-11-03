@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviour {
 
     // 이동
     public void Move(Player player, float horizontal, float vertical) {
+
+        // 다른 능력이 시전 중일 경우
+        if (player.IsCasting) return;
+
         Vector3 direction = new Vector3(horizontal, 0, vertical);
         direction.Normalize();
 
@@ -35,6 +39,7 @@ public class PlayerMovement : MonoBehaviour {
             player.transform.Rotate(0, 1, 0);
         }
         player.transform.forward = Vector3.Lerp(player.transform.forward, direction, player.RotateSpeed * Time.deltaTime); // 회전
+        
 	}
 
 }

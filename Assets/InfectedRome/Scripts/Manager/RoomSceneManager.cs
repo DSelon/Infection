@@ -11,6 +11,11 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     private AudioSource seSource;
     [SerializeField] private Player player;
     [SerializeField] private GameObject blackDisplay;
+    [SerializeField] private GameObject treeObject;
+    private GameObject treeCardBundle;
+    private GameObject treeCard1Button;
+    private GameObject treeCard2Button;
+    private GameObject treeCard3Button;
     [SerializeField] private GameObject pauseObject;
     private Transform pauseWindowTransform;
     private GameObject pauseBackToGameButton;
@@ -49,7 +54,12 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     private void Start() {
         bgmSource = camera.GetComponents<AudioSource>()[0];
         seSource = camera.GetComponents<AudioSource>()[1];
+        player.PlayerLevelUp += OnPlayerLevelUp;
         player.PlayerDeath += OnPlayerDeath;
+        treeCardBundle = treeObject.transform.GetChild(1).gameObject;
+        treeCard1Button = treeCardBundle.transform.GetChild(0).gameObject;
+        treeCard2Button = treeCardBundle.transform.GetChild(1).gameObject;
+        treeCard3Button = treeCardBundle.transform.GetChild(2).gameObject;
         pauseWindowTransform = pauseObject.transform.GetChild(1);
         pauseBackToGameButton = pauseWindowTransform.GetChild(0).gameObject;
         pauseExitToMainButton = pauseWindowTransform.GetChild(1).gameObject;
@@ -77,7 +87,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Animator pauseAnimator = pauseWindowTransform.GetComponent<Animator>();
-            if (Time.timeScale == 0) {
+            if (pauseObject.activeSelf) {
                 Time.timeScale = 1;
                 StartCoroutine(AnimationUtility.CCloseWindow(pauseObject, pauseAnimator));
             }
@@ -92,6 +102,101 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
 
 
+    // 트리 창 1 버튼 포인터 인
+    public void OnTree_1ButtonPointerEnter() {
+        Animator animator = treeCard1Button.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", true);
+
+        seSource.clip = buttonPointerSound;
+        seSource.Play();
+    }
+
+    // 트리 창 1 버튼 포인터 아웃
+    public void OnTree_1ButtonPointerExit() {
+        Animator animator = treeCard1Button.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", false);
+    }
+
+    // 트리 창 1 버튼 포인터 다운
+    public void OnTree_1ButtonPointerDown() {
+        StartCoroutine(COnTree_1ButtonPointerDown());
+    }
+
+    private IEnumerator COnTree_1ButtonPointerDown() {
+        Animator buttonAnimator = treeCard1Button.GetComponent<Animator>();
+
+        if (buttonAnimator.GetBool("isPointerDown")) yield break;
+
+        StartCoroutine(AnimationUtility.CPlayButtonPointerDownAnimation(buttonAnimator));
+
+        seSource.clip = buttonClickSound;
+        seSource.Play();
+    }
+
+    // 트리 창 2 버튼 포인터 인
+    public void OnTree_2ButtonPointerEnter() {
+        Animator animator = treeCard2Button.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", true);
+
+        seSource.clip = buttonPointerSound;
+        seSource.Play();
+    }
+
+    // 트리 창 2 버튼 포인터 아웃
+    public void OnTree_2ButtonPointerExit() {
+        Animator animator = treeCard2Button.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", false);
+    }
+
+    // 트리 창 2 버튼 포인터 다운
+    public void OnTree_2ButtonPointerDown() {
+        StartCoroutine(COnTree_2ButtonPointerDown());
+    }
+
+    private IEnumerator COnTree_2ButtonPointerDown() {
+        Animator buttonAnimator = treeCard2Button.GetComponent<Animator>();
+
+        if (buttonAnimator.GetBool("isPointerDown")) yield break;
+
+        StartCoroutine(AnimationUtility.CPlayButtonPointerDownAnimation(buttonAnimator));
+
+        seSource.clip = buttonClickSound;
+        seSource.Play();
+    }
+
+    // 트리 창 3 버튼 포인터 인
+    public void OnTree_3ButtonPointerEnter() {
+        Animator animator = treeCard3Button.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", true);
+
+        seSource.clip = buttonPointerSound;
+        seSource.Play();
+    }
+
+    // 트리 창 3 버튼 포인터 아웃
+    public void OnTree_3ButtonPointerExit() {
+        Animator animator = treeCard3Button.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", false);
+    }
+
+    // 트리 창 3 버튼 포인터 다운
+    public void OnTree_3ButtonPointerDown() {
+        StartCoroutine(COnTree_3ButtonPointerDown());
+    }
+
+    private IEnumerator COnTree_3ButtonPointerDown() {
+        Animator buttonAnimator = treeCard3Button.GetComponent<Animator>();
+
+        if (buttonAnimator.GetBool("isPointerDown")) yield break;
+
+        StartCoroutine(AnimationUtility.CPlayButtonPointerDownAnimation(buttonAnimator));
+
+        seSource.clip = buttonClickSound;
+        seSource.Play();
+    }
+    
+    
+    
     // 일시정지 창 게임으로 돌아가기 버튼 포인터 인
     public void OnPause_BackToGameButtonPointerEnter() {
         Animator animator = pauseBackToGameButton.GetComponent<Animator>();
@@ -278,6 +383,13 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
 
 
+    // 플레이어 레벨 업 이벤트
+    private void OnPlayerLevelUp() {
+
+    }
+
+    
+    
     // 플레이어 사망 이벤트
     private void OnPlayerDeath() {
         StartCoroutine(COnPlayerDeath());

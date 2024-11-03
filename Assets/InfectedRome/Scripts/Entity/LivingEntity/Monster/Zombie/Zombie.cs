@@ -374,7 +374,7 @@ public class Zombie : MonoBehaviour, ILivingEntity, IMonster {
         // 경험치 떨구기
         Vector3 position = transform.position;
         position.y += 1.0f;
-        Instantiate(exp, position, transform.rotation);
+        Instantiate(exp, position, exp.transform.rotation);
 
         // 객체 제거
         Destroy(gameObject, 2.0f);

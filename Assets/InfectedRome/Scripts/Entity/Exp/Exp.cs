@@ -3,7 +3,13 @@ using VFolders.Libs;
 
 public class Exp : MonoBehaviour {
 	
-    public int amount = 10;
+    public int amount;
+
+    private float rotateSpeed = 100.0f;
+
+    private void Update() {
+        transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime, Space.World);
+    }
 
     private void OnTriggerEnter(Collider other) {
         GameObject otherGameObject = other.gameObject;

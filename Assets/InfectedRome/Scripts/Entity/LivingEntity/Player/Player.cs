@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour, ILivingEntity {
 
     // Event
+    public Action PlayerLevelUp;
     public Action PlayerDeath;
 
 
@@ -63,6 +64,18 @@ public class Player : MonoBehaviour, ILivingEntity {
         }
 
     }
+    private float damageReduction = 0;
+    public float DamageReduction {
+
+        get {
+            return damageReduction;
+        }
+
+        set {
+            damageReduction = value;
+        }
+
+    }
     private bool isDead;
     public bool IsDead {
 
@@ -108,6 +121,18 @@ public class Player : MonoBehaviour, ILivingEntity {
 
         set {
             isInvincibility = value;
+        }
+
+    }
+    private float invincibilityTime;
+    public float InvincibilityTime {
+
+        get {
+            return invincibilityTime;
+        }
+
+        set {
+            invincibilityTime = value;
         }
 
     }
@@ -333,6 +358,7 @@ public class Player : MonoBehaviour, ILivingEntity {
     // Player Script
     public PlayerInput input { get; private set; }
     public PlayerMovement movement { get; private set; }
+    public PlayerAbility ability { get; private set; }
 
     // Player Component
     public CharacterController controller { get; private set; }
@@ -344,6 +370,7 @@ public class Player : MonoBehaviour, ILivingEntity {
     public IAbility[] equippedAbilities { get; private set; } = new IAbility[4];
 
     // UI
+    public Image[] abilityIcons { get; set; } = new Image[4];
     public Image[] abilityCoolFills { get; set; } = new Image[4];
 
 
@@ -364,6 +391,7 @@ public class Player : MonoBehaviour, ILivingEntity {
 
         input = GetComponent<PlayerInput>();
         movement = GetComponent<PlayerMovement>();
+        ability = GetComponent<PlayerAbility>();
 
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -373,40 +401,41 @@ public class Player : MonoBehaviour, ILivingEntity {
         int abilityBundleChildCount = abilityBundleTransform.childCount;
         abilities = new IAbility[abilityBundleChildCount];
         for (int i = 0; i < abilityBundleChildCount; i++) abilities[i] = abilityBundleTransform.GetChild(i).GetComponent<IAbility>();
+
+        Transform abilityCoolBundleTransform = AbilityCoolBundle.transform;
+        int abilityCoolBundleChildCount = abilityCoolBundleTransform.childCount;
+        for (int i = 0; i < abilityCoolBundleChildCount; i++) {
+            abilityIcons[i] = abilityCoolBundleTransform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Image>();
+            abilityCoolFills[i] = abilityCoolBundleTransform.GetChild(i).GetChild(2).GetComponent<Image>();
+        }
+
         equippedAbilities[0] = abilities[0];
         equippedAbilities[1] = abilities[1];
         equippedAbilities[2] = abilities[2];
         equippedAbilities[3] = abilities[3];
-
-        Transform abilityCoolBundleTransform = AbilityCoolBundle.transform;
-        int abilityCoolBundleChildCount = abilityCoolBundleTransform.childCount;
-        for (int i = 0; i < abilityCoolBundleChildCount; i++) abilityCoolFills[i] = abilityCoolBundleTransform.GetChild(i).GetChild(2).GetComponent<Image>();
+        for (int i = 0; i < equippedAbilities.Length; i++) {
+            abilityIcons[i].sprite = equippedAbilities[i].icon;
+        }
     }
 
     private void Update() {
         // 시간이 흐르지 않을 경우
         if (Time.timeScale == 0) return;
 
-
-
         // 카메라 추적
         movement.FollowCamera(this, Camera.transform.position);
+
+        // 무적 시간 적용
+        InvincibilityTime = InvincibilityTime > 0 ? InvincibilityTime - Time.deltaTime : 0;
+        IsInvincibility = InvincibilityTime > 0;
 
 
 
         // 플레이어가 사망했을 경우
         if (IsDead) return;
-        
-        // 플레이어가 능력을 시전 중일 경우
-        if (IsCasting) return;
 
         // 이동
         movement.Move(this, input.horizontal, input.vertical);
-
-
-
-        // 플레이어가 능력을 사용 중일 경우
-        if (IsOperating) return;
 
         // 능력 사용
         for (int i = 0; i < equippedAbilities.Length; i++) if (input.useAbility[i]) UseAbility(i);
@@ -444,8 +473,8 @@ public class Player : MonoBehaviour, ILivingEntity {
         CurrentExp -= MaxExp[level];
         Level += 1;
 
-        // TODO: 레벨 업 효과
-
+        // 플레이어 레벨 업 이벤트 호출
+        PlayerLevelUp?.Invoke();
     }
 
     
@@ -467,7 +496,7 @@ public class Player : MonoBehaviour, ILivingEntity {
 
 
         // 현재 체력 수치 적용
-        CurrentHealth = Mathf.Max(CurrentHealth - amount, 0);
+        CurrentHealth = Mathf.Max(CurrentHealth - amount * (1 - damageReduction), 0);
 
         // 파티클 재생
         Vector3 particlePosition = transform.position;

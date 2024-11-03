@@ -291,7 +291,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
         Vector3 position = transform.position;
         position.y += 0.5f;
         GameObject particle = Instantiate(venomExplosionParticle, position, transform.rotation);
-        VenomExplosion venomExplosion = particle.GetComponent<VenomExplosion>();
+        VenomEffect venomExplosion = particle.GetComponent<VenomEffect>();
         venomExplosion.caster = gameObject;
         venomExplosion.damage = AttackPower;
         Destroy(particle, particleLivingTime);
@@ -362,7 +362,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
         // 경험치 떨구기
         Vector3 position = transform.position;
         position.y += 1.0f;
-        Instantiate(exp, position, transform.rotation);
+        Instantiate(exp, position, exp.transform.rotation);
 
         // 객체 제거
         Destroy(gameObject, 2.0f);
