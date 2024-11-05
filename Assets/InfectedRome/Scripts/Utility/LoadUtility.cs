@@ -26,7 +26,7 @@ public class LoadUtility : MonoBehaviour {
     }
     
     public static IEnumerator CLoadScene(string sceneName, Animator animator, GameObject gaugeObject, Image fillImage, float slack = 2) {
-        yield return StaticCoroutine.StartCoroutine(CShowLoadGauge(animator, gaugeObject));
+        yield return CoroutineUtility.StartStaticCoroutine(CShowLoadGauge(animator, gaugeObject));
 
         yield return new WaitForSecondsRealtime(1.0f);
 
@@ -35,11 +35,11 @@ public class LoadUtility : MonoBehaviour {
 
         operations[sceneName] = operation;
 
-        yield return StaticCoroutine.StartCoroutine(CRunLoadGauge(sceneName, fillImage, slack));
+        yield return CoroutineUtility.StartStaticCoroutine(CRunLoadGauge(sceneName, fillImage, slack));
 
         yield return new WaitForSecondsRealtime(1.0f);
 
-        yield return StaticCoroutine.StartCoroutine(CHideLoadGauge(animator, gaugeObject));
+        yield return CoroutineUtility.StartStaticCoroutine(CHideLoadGauge(animator, gaugeObject));
     }
 
 

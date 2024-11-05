@@ -70,7 +70,7 @@ public class AuraReleaseAbility : MonoBehaviour, IAbility {
     
     public IEnumerator CUseAbility_RunAnimation(Player player) {
         player.IsOperating = true;
-        player.DamageReduction = damageReductionTree ? 0.4f : 0;
+        player.DamageReduction = damageReductionTree ? 0.8f : 0;
 
         player.animator.SetBool("isUsingAbility_AuraRelease", true);
         player.animator.SetFloat("usingAbilitySpeed", operatingSpeed);
@@ -100,7 +100,7 @@ public class AuraReleaseAbility : MonoBehaviour, IAbility {
         firstPosition.y += 1.5f;
         GameObject firstParticle = Instantiate(skillEffects[0], firstPosition, playerTransform.transform.rotation);
         AuraRelease01Effect auraRelease01Effect = firstParticle.GetComponent<AuraRelease01Effect>();
-        auraRelease01Effect.size += radiusTree ? auraRelease01Effect.size * 0.5f : 0;
+        auraRelease01Effect.size += radiusTree ? auraRelease01Effect.size * 0.3f : 0;
         StartCoroutine(CUseAbility_UpdateParticlePosition(firstParticle.transform, playerTransform));
         Destroy(firstParticle, particleLivingTimes[0]);
 
@@ -117,7 +117,7 @@ public class AuraReleaseAbility : MonoBehaviour, IAbility {
         secondPosition.y += 1.5f;
         GameObject secondParticle = Instantiate(skillEffects[1], secondPosition, playerTransform.transform.rotation);
         AuraRelease02Effect auraRelease02Effect = secondParticle.GetComponent<AuraRelease02Effect>();
-        auraRelease02Effect.size += radiusTree ? auraRelease02Effect.size * 0.5f : 0;
+        auraRelease02Effect.size += radiusTree ? auraRelease02Effect.size * 0.3f : 0;
         auraRelease02Effect.caster = player.gameObject;
         auraRelease02Effect.damage = damage;
         /*

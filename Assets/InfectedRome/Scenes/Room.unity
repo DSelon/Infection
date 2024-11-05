@@ -475,7 +475,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &62408662
 Transform:
   m_ObjectHideFlags: 0
@@ -511,6 +511,7 @@ MonoBehaviour:
   monsters:
   - {fileID: 2865028399606961730, guid: 1fcb52d5a8e38e940883c48083aafd3c, type: 3}
   - {fileID: 2865028399606961730, guid: feda69656b01d214b8b5f5e1eaf53e22, type: 3}
+  - {fileID: 2865028399606961730, guid: e9ad82ea39d6dae46b5c3fa5d03f210c, type: 3}
 --- !u!1 &104942711
 GameObject:
   m_ObjectHideFlags: 0
@@ -2794,6 +2795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 493406891}
   - component: {fileID: 493406892}
+  - component: {fileID: 493406893}
   m_Layer: 5
   m_Name: Group_CardBundle
   m_TagString: Untagged
@@ -2849,6 +2851,27 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!95 &493406893
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493406890}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3efba62a8414fc84f8d6013528e9f737, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &517964379
 GameObject:
   m_ObjectHideFlags: 0
@@ -10327,6 +10350,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd41e591d9da70946984148b125267e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5866666021809645335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149257136077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23eca951118042d48ac83175c5661e53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  auraReleaseIcon: {fileID: 21300000, guid: e0f4c58ba83d4924d9a92943327992dd, type: 3}
+  pheonixSlashIcon: {fileID: 21300000, guid: fa95ea0bb97b3a147ac2a162eaf01243, type: 3}
+  electricWhirlwindIcon: {fileID: 21300000, guid: 866ae5d47b649c74b9b54e5d7087bab7, type: 3}
+  rollingIcon: {fileID: 21300000, guid: 0c61888b3ac93ca43b46438f6c767151, type: 3}
+  barrierIcon: {fileID: 21300000, guid: f4f66bf32f899f74d9a8d1cb5f53df58, type: 3}
+  healingAreaIcon: {fileID: 21300000, guid: 7775288d67a0f1f4db701be6420b037c, type: 3}
+  emptyIcon: {fileID: 21300000, guid: 9f75a268b1ccd91499525e668b53899d, type: 3}
 --- !u!4 &5880523505618506160
 Transform:
   m_ObjectHideFlags: 0
@@ -10444,6 +10486,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6948428544391336633, guid: 8460bb2314d7a6642a626f49c512c092, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5866666021809645335}
     - targetCorrespondingSourceObject: {fileID: 8466722031955329137, guid: 8460bb2314d7a6642a626f49c512c092, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6111590326249733599}

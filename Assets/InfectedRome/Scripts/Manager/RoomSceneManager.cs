@@ -82,14 +82,18 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
         StartCoroutine(BGMUtility.CVolumeUp(bgmSource)); // BGM 볼륨 업
 
         seSource.volume = PlayerPrefs.GetFloat("Option_SEVolume");
+
+
+
+        CoroutineUtility.CallWaitForSeconds(1, OnPlayerLevelUp);
     }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Animator pauseAnimator = pauseWindowTransform.GetComponent<Animator>();
             if (pauseObject.activeSelf) {
-                Time.timeScale = 1;
                 StartCoroutine(AnimationUtility.CCloseWindow(pauseObject, pauseAnimator));
+                CoroutineUtility.CallWaitForSecondsRealtime(0.25f, () => { Time.timeScale = 1; });
             }
             else {
                 StartCoroutine(AnimationUtility.COpenWindow(pauseObject, pauseAnimator));
@@ -131,6 +135,10 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
         seSource.clip = buttonClickSound;
         seSource.Play();
+
+
+
+        OnTree_ButtonPointerDown(0);
     }
 
     // 트리 창 2 버튼 포인터 인
@@ -162,6 +170,10 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
         seSource.clip = buttonClickSound;
         seSource.Play();
+
+
+
+        OnTree_ButtonPointerDown(1);
     }
 
     // 트리 창 3 버튼 포인터 인
@@ -193,6 +205,23 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
         seSource.clip = buttonClickSound;
         seSource.Play();
+
+
+
+        OnTree_ButtonPointerDown(2);
+    }
+
+    // 트리 창 버튼 포인터 다운
+    private void OnTree_ButtonPointerDown(int number) {
+
+        // 트리 능력 활성화
+        player.ability.PickCard(number, player);
+
+        // 트리 창 닫기
+        Animator treeAnimator = treeCardBundle.GetComponent<Animator>();
+        StartCoroutine(AnimationUtility.CCloseWindow(treeObject, treeAnimator));
+        CoroutineUtility.CallWaitForSecondsRealtime(0.25f, () => { Time.timeScale = 1; });
+
     }
     
     
@@ -385,6 +414,22 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
     // 플레이어 레벨 업 이벤트
     private void OnPlayerLevelUp() {
+
+        Time.timeScale = 0;
+        
+        // 트리 창 열기
+        Animator treeAnimator = treeCardBundle.GetComponent<Animator>();
+        StartCoroutine(AnimationUtility.COpenWindow(treeObject, treeAnimator));
+        player.ability.PrintCard(player);
+        treeCard1Button.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>().sprite = player.ability.cards[player.ability.selectedCards[0]].Item1;
+        treeCard1Button.transform.GetChild(2).GetComponent<Text>().text = player.ability.cards[player.ability.selectedCards[0]].Item2;
+        treeCard1Button.transform.GetChild(3).GetComponent<Text>().text = player.ability.cards[player.ability.selectedCards[0]].Item3;
+        treeCard2Button.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>().sprite = player.ability.cards[player.ability.selectedCards[1]].Item1;
+        treeCard2Button.transform.GetChild(2).GetComponent<Text>().text = player.ability.cards[player.ability.selectedCards[1]].Item2;
+        treeCard2Button.transform.GetChild(3).GetComponent<Text>().text = player.ability.cards[player.ability.selectedCards[1]].Item3;
+        treeCard3Button.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>().sprite = player.ability.cards[player.ability.selectedCards[2]].Item1;
+        treeCard3Button.transform.GetChild(2).GetComponent<Text>().text = player.ability.cards[player.ability.selectedCards[2]].Item2;
+        treeCard3Button.transform.GetChild(3).GetComponent<Text>().text = player.ability.cards[player.ability.selectedCards[2]].Item3;
 
     }
 

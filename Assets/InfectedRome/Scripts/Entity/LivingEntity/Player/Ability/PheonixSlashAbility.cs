@@ -66,7 +66,7 @@ public class PheonixSlashAbility : MonoBehaviour, IAbility {
     
     public IEnumerator CUseAbility_RunAnimation(Player player) {
         player.IsOperating = true;
-        player.DamageReduction = damageReductionTree ? 0.4f : 0;
+        player.DamageReduction = damageReductionTree ? 0.8f : 0;
 
         player.animator.SetBool("isUsingAbility_PheonixSlash", true);
         player.animator.SetFloat("usingAbilitySpeed", operatingSpeed);
@@ -97,14 +97,14 @@ public class PheonixSlashAbility : MonoBehaviour, IAbility {
         // 파티클 재생
         GameObject firstParticle = Instantiate(skillEffects[0], position, playerTransform.transform.rotation);
         PheonixSlash01Effect pheonixSlash01Effect = firstParticle.GetComponent<PheonixSlash01Effect>();
-        pheonixSlash01Effect.size += radiusTree ? pheonixSlash01Effect.size * 0.25f : 0;
+        pheonixSlash01Effect.size += radiusTree ? pheonixSlash01Effect.size * 0.15f : 0;
         StartCoroutine(CUseAbility_UpdateParticlePosition(firstParticle.transform, playerTransform));
         Destroy(firstParticle, particleLivingTimes[0]);
 
         // 파티클 재생
         GameObject secondParticle = Instantiate(skillEffects[1], position, playerTransform.transform.rotation);
         PheonixSlash02Effect pheonixSlash02Effect = secondParticle.GetComponent<PheonixSlash02Effect>();
-        pheonixSlash02Effect.size += radiusTree ? pheonixSlash02Effect.size * 0.25f : 0;
+        pheonixSlash02Effect.size += radiusTree ? pheonixSlash02Effect.size * 0.15f : 0;
         pheonixSlash02Effect.caster = player.gameObject;
         pheonixSlash02Effect.damage = damage;
         Destroy(secondParticle, particleLivingTimes[1]);

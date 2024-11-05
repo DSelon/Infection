@@ -154,11 +154,7 @@ public class Player : MonoBehaviour, ILivingEntity {
     }
     private int[] maxExp = {
         100, 200, 300, 400, 500,
-        600, 700, 800, 900, 1000,
-        1100, 1200, 1300, 1400, 1500,
-        1600, 1700, 1800, 1900, 2000,
-        2100, 2200, 2300, 2400, 2500,
-        2600, 2700, 2800, 2900, 3000
+        1100, 1200, 1300, 1400, 1500, 1600, 1000000
     };
     public int[] MaxExp {
 
@@ -170,8 +166,14 @@ public class Player : MonoBehaviour, ILivingEntity {
             maxExp = value;
 
             // UI 갱신
-            ExpFill.fillAmount = (float) currentExp / maxExp[level];
-            ExpText.text = currentExp + " / " + maxExp[level];
+            if (MaxExp[level] < 1000000) {
+                ExpFill.fillAmount = (float) currentExp / maxExp[level];
+                ExpText.text = currentExp + " / " + maxExp[level];
+            }
+            else {
+                ExpFill.fillAmount = 1;
+                ExpText.text = "MAX";
+            }
 
             // 레벨 업
             if (currentExp >= MaxExp[level]) LevelUp();
@@ -191,8 +193,14 @@ public class Player : MonoBehaviour, ILivingEntity {
             currentExp = value;
 
             // UI 갱신
-            ExpFill.fillAmount = (float) currentExp / maxExp[level];
-            ExpText.text = currentExp + " / " + maxExp[level];
+            if (MaxExp[level] < 1000000) {
+                ExpFill.fillAmount = (float) currentExp / maxExp[level];
+                ExpText.text = currentExp + " / " + maxExp[level];
+            }
+            else {
+                ExpFill.fillAmount = 1;
+                ExpText.text = "MAX";
+            }
 
             // 레벨 업
             if (currentExp >= MaxExp[level]) LevelUp();
@@ -408,14 +416,6 @@ public class Player : MonoBehaviour, ILivingEntity {
             abilityIcons[i] = abilityCoolBundleTransform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Image>();
             abilityCoolFills[i] = abilityCoolBundleTransform.GetChild(i).GetChild(2).GetComponent<Image>();
         }
-
-        equippedAbilities[0] = abilities[0];
-        equippedAbilities[1] = abilities[1];
-        equippedAbilities[2] = abilities[2];
-        equippedAbilities[3] = abilities[3];
-        for (int i = 0; i < equippedAbilities.Length; i++) {
-            abilityIcons[i].sprite = equippedAbilities[i].icon;
-        }
     }
 
     private void Update() {
@@ -447,6 +447,8 @@ public class Player : MonoBehaviour, ILivingEntity {
     
     // 능력 사용
     public void UseAbility(int number) {
+        if (equippedAbilities[number] == null) return;
+
         equippedAbilities[number].UseAbility(this);
 
         StartCoroutine(CUseAbility_RunCooldownUI(number));

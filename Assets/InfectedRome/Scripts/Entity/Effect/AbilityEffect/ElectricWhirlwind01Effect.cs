@@ -42,7 +42,7 @@ public class ElectricWhirlwind01Effect : MonoBehaviour {
         if (player == null) return;
         if (player.IsDead) return;
 
-        player.Heal(electricWhirlwindAbility.bloodSuckingTree ? damage * Time.deltaTime * 0.02f : 0);
+        player.Heal(electricWhirlwindAbility.bloodSuckingTree ? damage * Time.deltaTime * 0.01f : 0);
     }
 
 }

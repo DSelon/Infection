@@ -68,7 +68,7 @@ public class HealingAreaAbility : MonoBehaviour, IAbility {
         Quaternion rotation = skillEffects[0].transform.rotation;
         GameObject particle = Instantiate(skillEffects[0], position, rotation);
         HealingArea01Effect healingArea01Effect = particle.GetComponent<HealingArea01Effect>();
-        healingArea01Effect.size += radiusTree ? healingArea01Effect.size * 0.2f : 0;
+        healingArea01Effect.size += radiusTree ? healingArea01Effect.size * 0.1f : 0;
         healingArea01Effect.caster = player.gameObject;
         healingArea01Effect.heal = heal + (increasedHealTree ? heal * 0.1f : 0);
         healingArea01Effect.effect = skillEffects[1];

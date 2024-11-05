@@ -67,7 +67,7 @@ public class ElectricWhirlwindAbility : MonoBehaviour, IAbility {
     
     public IEnumerator CUseAbility_RunAnimation(Player player) {
         player.IsOperating = true;
-        player.DamageReduction = damageReductionTree ? 0.3f : 0;
+        player.DamageReduction = damageReductionTree ? 0.6f : 0;
 
 
 
@@ -98,7 +98,7 @@ public class ElectricWhirlwindAbility : MonoBehaviour, IAbility {
         position.y += 1.5f;
         GameObject particle = Instantiate(skillEffects, position, playerTransform.transform.rotation);
         ElectricWhirlwind01Effect electricWhirlwind01Effect = particle.GetComponent<ElectricWhirlwind01Effect>();
-        electricWhirlwind01Effect.size += radiusTree ? electricWhirlwind01Effect.size * 0.5f : 0;
+        electricWhirlwind01Effect.size += radiusTree ? electricWhirlwind01Effect.size * 0.3f : 0;
         electricWhirlwind01Effect.caster = player.gameObject;
         electricWhirlwind01Effect.damage = damage;
         electricWhirlwind01Effect.electricWhirlwindAbility = this;
