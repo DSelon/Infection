@@ -72,6 +72,8 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Custom Asset Resources
+/Assets/_DLNK/
+/Assets/Allsky/
 /Assets/Epic Toon FX/
 /Assets/Fantasy RPG Icons Pack/
 /Assets/MedievalKingdomUI/
@@ -82,6 +84,8 @@ crashlytics-build.properties
 /Assets/unity-chan!/
 /Assets/Zombie/
 
+Assets/_DLNK.meta
+Assets/Allsky.meta
 Assets/Epic Toon FX.meta
 Assets/Fantasy RPG Icons Pack.meta
 Assets/MedievalKingdomUI.meta
