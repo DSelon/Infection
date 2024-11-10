@@ -32,9 +32,6 @@ public class Zombie : MonoBehaviour, ILivingEntity, IMonster {
 
             currentHealth = value > maxHealth ? maxHealth : value;
 
-            // TODO: UI 갱신
-
-
             if (currentHealth == 0) Die();
         }
 

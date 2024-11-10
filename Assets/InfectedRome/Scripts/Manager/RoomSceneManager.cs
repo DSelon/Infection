@@ -10,6 +10,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     private AudioSource bgmSource;
     private AudioSource seSource;
     [SerializeField] private Player player;
+    [SerializeField] private Creep creep;
     [SerializeField] private GameObject blackDisplay;
     [SerializeField] private GameObject treeObject;
     private GameObject treeCardBundle;
@@ -56,6 +57,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
         seSource = camera.GetComponents<AudioSource>()[1];
         player.PlayerLevelUp += OnPlayerLevelUp;
         player.PlayerDeath += OnPlayerDeath;
+        creep.CreepDeath += OnCreepDeath;
         treeCardBundle = treeObject.transform.GetChild(1).gameObject;
         treeCard1Button = treeCardBundle.transform.GetChild(0).gameObject;
         treeCard2Button = treeCardBundle.transform.GetChild(1).gameObject;
@@ -89,6 +91,9 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     }
 
     private void Update() {
+        if (player.IsDead
+        || creep.IsDead) return;
+
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Animator pauseAnimator = pauseWindowTransform.GetComponent<Animator>();
             if (pauseObject.activeSelf) {
@@ -415,6 +420,8 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     // 플레이어 레벨 업 이벤트
     private void OnPlayerLevelUp() {
 
+        if (creep.IsDead) return;
+
         Time.timeScale = 0;
         
         // 트리 창 열기
@@ -437,11 +444,13 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     
     // 플레이어 사망 이벤트
     private void OnPlayerDeath() {
+        if (creep.IsDead) return;
+
         StartCoroutine(COnPlayerDeath());
     }
 
     private IEnumerator COnPlayerDeath() {
-        StartCoroutine(COnPlayerDeath_TimeExpansionEffect());
+        StartCoroutine(CTimeExpansionEffect());
 
         yield return new WaitForSecondsRealtime(2.25f);
 
@@ -472,7 +481,50 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
         StartCoroutine(AnimationUtility.COpenWindow(scoreObject, scoreAnimator));
     }
 
-    private IEnumerator COnPlayerDeath_TimeExpansionEffect() {
+
+
+    // Creep 사망 이벤트
+    private void OnCreepDeath() {
+        if (player.IsDead) return;
+
+        StartCoroutine(COnCreepDeath());
+    }
+
+    private IEnumerator COnCreepDeath() {
+        StartCoroutine(CTimeExpansionEffect());
+
+        yield return new WaitForSecondsRealtime(2.25f);
+
+        StartCoroutine(BGMUtility.CVolumeDown(bgmSource, 2.0f));
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        // bgmSource.clip = defeatMusics[Random.Range(0, defeatMusics.Length)];
+        bgmSource.clip = victoryMusics[Random.Range(0, victoryMusics.Length)];
+        StartCoroutine(BGMUtility.CVolumeUp(bgmSource, 2.0f));
+        bgmSource.Play();
+
+        yield return new WaitForSecondsRealtime(0.25f);
+
+        // scoreWindowImage.sprite = defeatWindowImage;
+        // scoreTitleText.text = "DEFEAT";
+        // scoreTitleText.color = defeatFontColor;
+        // scoreScoreText.text = "Score: " + (player.Level + 1).ToString();
+        // scoreReplayButtonText.color = defeatFontColor;
+        // scoreQuitButtonText.color = defeatFontColor;
+        scoreWindowImage.sprite = victoryWindowImage;
+        scoreTitleText.text = "VICTORY";
+        scoreTitleText.color = victoryFontColor;
+        scoreScoreText.text = "Score: " + (player.Level + 1).ToString();
+        scoreReplayButtonText.color = victoryFontColor;
+        scoreQuitButtonText.color = victoryFontColor;
+        Animator scoreAnimator = scoreWindowTransform.GetComponent<Animator>();
+        StartCoroutine(AnimationUtility.COpenWindow(scoreObject, scoreAnimator));
+    }
+
+
+
+    private IEnumerator CTimeExpansionEffect() {
         float timeScaleChangeSpeed = 0.3f;
         float differenceTimeScale = Time.timeScale;
         float currentTimeScale = Time.timeScale;

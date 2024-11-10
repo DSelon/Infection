@@ -74,6 +74,7 @@ crashlytics-build.properties
 # Custom Asset Resources
 /Assets/_DLNK/
 /Assets/Allsky/
+/Assets/Creep Horror Creature/
 /Assets/Epic Toon FX/
 /Assets/Fantasy RPG Icons Pack/
 /Assets/MedievalKingdomUI/
@@ -86,6 +87,7 @@ crashlytics-build.properties
 
 Assets/_DLNK.meta
 Assets/Allsky.meta
+Assets/Creep Horror Creature.meta
 Assets/Epic Toon FX.meta
 Assets/Fantasy RPG Icons Pack.meta
 Assets/MedievalKingdomUI.meta
