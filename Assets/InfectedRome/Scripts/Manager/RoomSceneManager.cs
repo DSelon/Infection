@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +10,10 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 	[SerializeField] private GameObject camera;
     private AudioSource bgmSource;
     private AudioSource seSource;
+    [SerializeField] private MonsterSpawner monsterSpawner;
     [SerializeField] private Player player;
-    [SerializeField] private Creep creep;
+    private Creep creep;
+    private bool isCreepNull;
     [SerializeField] private GameObject blackDisplay;
     [SerializeField] private GameObject treeObject;
     private GameObject treeCardBundle;
@@ -57,7 +60,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
         seSource = camera.GetComponents<AudioSource>()[1];
         player.PlayerLevelUp += OnPlayerLevelUp;
         player.PlayerDeath += OnPlayerDeath;
-        creep.CreepDeath += OnCreepDeath;
+        isCreepNull = true;
         treeCardBundle = treeObject.transform.GetChild(1).gameObject;
         treeCard1Button = treeCardBundle.transform.GetChild(0).gameObject;
         treeCard2Button = treeCardBundle.transform.GetChild(1).gameObject;
@@ -91,8 +94,17 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     }
 
     private void Update() {
+        foreach (GameObject gameObject in monsterSpawner.SpawnedMonsters) {
+            if (gameObject.GetComponent<Creep>() != null) {
+                isCreepNull = false;
+                creep = gameObject.GetComponent<Creep>();
+                creep.CreepDeath += OnCreepDeath;
+                break;
+            }
+        }
+
         if (player.IsDead
-        || creep.IsDead) return;
+        || (creep != null && creep.IsDead)) return;
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Animator pauseAnimator = pauseWindowTransform.GetComponent<Animator>();
@@ -420,7 +432,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     // 플레이어 레벨 업 이벤트
     private void OnPlayerLevelUp() {
 
-        if (creep.IsDead) return;
+        if (creep != null && creep.IsDead) return;
 
         Time.timeScale = 0;
         

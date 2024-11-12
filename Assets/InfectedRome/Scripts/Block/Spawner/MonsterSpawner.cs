@@ -1,17 +1,43 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour {
 	
-    [field: Header("Object")]
+    [field: Header("Player")]
     [field: SerializeField] public GameObject player;
-    [field: SerializeField] public GameObject[] monsters;
 
+    [field: Header("Monster")]
+    [field: SerializeField] public GameObject grayZombie;
+    [field: SerializeField] public GameObject redZombie;
+    [field: SerializeField] public GameObject venom;
+    [field: SerializeField] public GameObject creep;
 
+    private List<GameObject> spawnedMonsters = new List<GameObject>();
+    public List<GameObject> SpawnedMonsters {
 
-    public Transform[] spawnTransform { get; private set; }
+        get {
+            bool existNull = true;
+            while (spawnedMonsters.Count != 0 && existNull) {
+                existNull = false;
+                foreach (GameObject spawnMonster in spawnedMonsters) {
+                    if (spawnMonster == null) {
+                        spawnedMonsters.Remove(spawnMonster);
+                        existNull = true;
+                        break;
+                    }
+                }
+            }
 
+            return spawnedMonsters;
+        }
 
+        set {
+            spawnedMonsters = value;
+        }
+
+    }
+
+    public Transform[] spawnTransform { get; set; }
 
 
 
@@ -21,36 +47,32 @@ public class MonsterSpawner : MonoBehaviour {
         for (int i = 0; i < childCount; i++) {
             spawnTransform[i] = transform.GetChild(i);
         }
-
-
-
-        StartCoroutine(CRunSpawner());
     }
 
-
-
-
-
-    private IEnumerator CRunSpawner() {
-        ILivingEntity playerLivingEntity = player.GetComponent<ILivingEntity>();
-        while (!playerLivingEntity.IsDead) {
-            for (int i = 0; i < 1; i++) {
-                SpawnMonster();
-            }
-
-            yield return new WaitForSeconds(0.2f);
+    public void SpawnMonster(int spawnerNumber, int monsterNumber) {
+        // 소환될 몬스터 종류 지정
+        GameObject monster;
+        switch (monsterNumber) {
+            case 0:
+                monster = grayZombie;
+                break;
+            case 1:
+                monster = redZombie;
+                break;
+            case 2:
+                monster = venom;
+                break;
+            case 3:
+                monster = creep;
+                break;
+            default:
+                monster = grayZombie;
+                break;
         }
-    }
 
+        GameObject spawnedMonster = Instantiate(monster, spawnTransform[spawnerNumber].position, spawnTransform[spawnerNumber].rotation); // 소환될 몬스터 위치 지정
+        spawnedMonster.GetComponent<IMonster>().Target = player; // 소환된 몬스터의 타겟 지정
 
-
-    public void SpawnMonster() {
-        SpawnMonster(Random.Range(0, spawnTransform.Length));
-    }
-    
-    public void SpawnMonster(int spawnerNumber) {
-        GameObject monster = Instantiate(monsters[Random.Range(0, monsters.Length)], spawnTransform[spawnerNumber].position, spawnTransform[spawnerNumber].rotation);
-        ILivingEntity zombieLivingEntity = monster.GetComponent<ILivingEntity>();
-        monster.GetComponent<IMonster>().Target = GameObject.Find("Player");
+        SpawnedMonsters.Add(spawnedMonster); // 소환된 몬스터 목록에 추가
     }
 }
