@@ -114,7 +114,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
 
     // Object
-    [SerializeField] private GameObject target;
+    private GameObject target;
     public GameObject Target {
 
         get {
@@ -127,12 +127,21 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
     }
     public GameObject bloodParticle;
+    [Header("Jump Up Effect")]
     public GameObject jumpUpEffect;
+    public Transform jumpUpEffectTransform;
+    public AudioClip jumpUpSound;
+    [Header("Jump Down Effect")]
     public GameObject jumpDownEffect;
-    public GameObject roarEffect;
-    public Transform roarTransform;
-    public GameObject sniffEffect;
-    public Transform sniffTransform;
+    public Transform jumpDownEffectTransform;
+    public AudioClip jumpDownSound;
+    [Header("Flamethrower Effect")]
+    public GameObject flamethrowerEffect;
+    public Transform flamethrowerEffectTransform;
+    [Header("Lightning Strike Effect")]
+    public GameObject lightningStrikeEffect;
+    public Transform lightningStrikeEffectTransform;
+    [Header("")]
     public AudioClip deathSound;
     public AudioClip[] punchSounds = new AudioClip[2];
     public AudioClip[] eatSounds = new AudioClip[3];
@@ -154,6 +163,8 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         source = GetComponent<AudioSource>();
+
+        Target = GameObject.Find("Player");
 
 
 
@@ -180,7 +191,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
     // 스테이터스 초기화
     protected virtual void StatusInit() {
-        MaxHealth = 100.0f;
+        MaxHealth = 1000;
         CurrentHealth = MaxHealth;
         MoveSpeed = 2.5f;
         IsDead = MaxHealth > 0 ? false : true;
@@ -189,8 +200,8 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
     // 옵션 초기화
     protected virtual void OptionInit() {
-        DetectDistance = 100.0f;
-        AttackDistance = 20.0f;
+        DetectDistance = 500;
+        AttackDistance = 20;
     }
 
 
@@ -331,7 +342,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
     // Punch
     private IEnumerator Punch() {
-        IsAttacking = true;
+        IsAttacking = true; // 공격 시작
 
         // 애니메이션 재생
         animator.SetBool("isPunch", true);
@@ -360,7 +371,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         // 대상 공격
         ILivingEntity targetLivingEntity = Target.GetComponent<ILivingEntity>();
-        targetLivingEntity.Damage(15);
+        targetLivingEntity.Damage(40);
 
 
 
@@ -369,6 +380,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         if (IsDead) yield break;
 
+        // 애니메이션 종료
         animator.SetBool("isPunch", false);
 
 
@@ -378,12 +390,14 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         if (IsDead) yield break;
 
-        IsAttacking = false;
+        IsAttacking = false; // 공격 종료
     }
     
     // JumpUp
     private IEnumerator JumpUp() {
-        isAttacking = true;
+        isAttacking = true; // 공격 시작
+
+        // 애니메이션 재생
         animator.SetBool("isJumpUp", true);
 
 
@@ -393,14 +407,22 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         if (IsDead) yield break;
 
-        Vector3 position = transform.position;
-        position.y += 0.1f;
-        Quaternion rotation = jumpUpEffect.transform.rotation;
-        GameObject effect = Instantiate(jumpUpEffect, position, rotation);
-        Destroy(effect, 1);
+        // 파티클 생성
+        Vector3 jumpUpEffectPosition = jumpUpEffectTransform.position;
+        Quaternion jumpUpEffectRotation = jumpUpEffectTransform.rotation;
+        GameObject jumpUpEffectParticle = Instantiate(jumpUpEffect, jumpUpEffectPosition, jumpUpEffectRotation);
+        JumpUpEffect jumpUpEffectScript = jumpUpEffectParticle.GetComponent<JumpUpEffect>();
+        jumpUpEffectScript.size = 2;
+        Destroy(jumpUpEffectParticle, 1);
 
         // 충돌체 제거
         GetComponent<Collider>().enabled = false;
+
+        // 효과음 재생
+        AudioSource jumpUpSource = jumpUpEffectParticle.GetComponent<AudioSource>();
+        jumpUpSource.clip = jumpUpSound;
+        jumpUpSource.volume = PlayerPrefs.GetFloat("Option_SEVolume");
+        jumpUpSource.Play();
 
 
 
@@ -409,6 +431,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         if (IsDead) yield break;
 
+        // 애니메이션 종료
         animator.SetBool("isJumpUp", false);
 
 
@@ -435,7 +458,10 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
     // JumpDown
     private IEnumerator JumpDown() {
+        // 애니메이션 재생
         animator.SetBool("isJumpDown", true);
+
+
 
         float time = 0.67f;
         yield return new WaitForSeconds(time);
@@ -445,33 +471,47 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
         // 충돌체 생성
         GetComponent<Collider>().enabled = true;
 
-        Vector3 position = transform.position;
-        position.y += 0.1f;
-        Quaternion rotation = jumpDownEffect.transform.rotation;
-        GameObject firstEffect = Instantiate(jumpDownEffect, position, rotation);
-        JumpDownEffect effect = firstEffect.GetComponent<JumpDownEffect>();
-        effect.caster = gameObject;
-        effect.damage = 30;
-        Destroy(firstEffect, 1);
+        // 파티클 생성
+        Vector3 jumpDownEffectPosition = jumpDownEffectTransform.position;
+        Quaternion jumpDownEffectRotation = jumpDownEffectTransform.rotation;
+        GameObject jumpDownEffectParticle = Instantiate(jumpDownEffect, jumpDownEffectPosition, jumpDownEffectRotation);
+        JumpDownEffect jumpDownEffectScript = jumpDownEffectParticle.GetComponent<JumpDownEffect>();
+        jumpDownEffectScript.size = 2;
+        jumpDownEffectScript.caster = gameObject;
+        jumpDownEffectScript.damage = 30;
+        Destroy(jumpDownEffectParticle, 1);
+
+        // 효과음 재생
+        AudioSource jumpDownSource = jumpDownEffectParticle.GetComponent<AudioSource>();
+        jumpDownSource.clip = jumpDownSound;
+        jumpDownSource.volume = PlayerPrefs.GetFloat("Option_SEVolume");
+        jumpDownSource.Play();
+
+
 
         time = 0.4f;
         yield return new WaitForSeconds(time);
 
         if (IsDead) yield break;
 
+        // 애니메이션 종료
         animator.SetBool("isJumpDown", false);
+
+
 
         time = 0.5f;
         yield return new WaitForSeconds(time);
 
         if (IsDead) yield break;
         
-        isAttacking = false;
+        isAttacking = false; // 공격 종료
     }
 
     // Roar
     private IEnumerator Roar() {
-        isAttacking = true;
+        isAttacking = true; // 공격 시작
+
+        // 애니메이션 재생
         animator.SetBool("isRoar", true);
 
 
@@ -481,11 +521,15 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         if (IsDead) yield break;
 
-        GameObject firstEffect = Instantiate(roarEffect, roarTransform.position, roarTransform.rotation);
-        RoarEffect effect = firstEffect.GetComponent<RoarEffect>();
-        effect.caster = gameObject;
-        effect.damage = 30;
-        Destroy(firstEffect, 2);
+        // 파티클 생성
+        Vector3 flamethrowerEffectPosition = flamethrowerEffectTransform.position;
+        Quaternion flamethrowerEffectRotation = flamethrowerEffectTransform.rotation;
+        GameObject flamethrowerEffectParticle = Instantiate(flamethrowerEffect, flamethrowerEffectPosition, flamethrowerEffectRotation);
+        FlamethrowerEffect flamethrowerEffectScript = flamethrowerEffectParticle.GetComponent<FlamethrowerEffect>();
+        flamethrowerEffectScript.size = 6;
+        flamethrowerEffectScript.caster = gameObject;
+        flamethrowerEffectScript.damage = 30;
+        Destroy(flamethrowerEffectParticle, 2);
 
 
 
@@ -494,6 +538,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         if (IsDead) yield break;
 
+        // 애니메이션 종료
         animator.SetBool("isRoar", false);
 
 
@@ -503,7 +548,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         if (IsDead) yield break;
 
-        isAttacking = false;
+        isAttacking = false; // 공격 종료
     }
 
     // Bite
@@ -513,7 +558,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
     // Eat
     private IEnumerator Eat() {
-        IsAttacking = true;
+        IsAttacking = true; // 공격 시작
 
         // 애니메이션 재생
         animator.SetBool("isEat", true);
@@ -525,7 +570,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
 
 
-        float time = 0.41f;
+        float time = 0.205f;
         yield return new WaitForSeconds(time);
 
         if (IsDead) yield break;
@@ -537,11 +582,11 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         // 대상 공격
         ILivingEntity targetLivingEntity = Target.GetComponent<ILivingEntity>();
-        targetLivingEntity.Damage(15);
+        targetLivingEntity.Damage(50);
 
 
 
-        time = 1.4f;
+        time = 0.7f;
         yield return new WaitForSeconds(time);
 
         if (IsDead) yield break;
@@ -553,7 +598,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
 
 
-        time = 1.4f;
+        time = 0.7f;
         yield return new WaitForSeconds(time);
 
         if (IsDead) yield break;
@@ -565,26 +610,29 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
 
 
-        time = 2;
-        yield return new WaitForSeconds(time);
-
-        if (IsDead) yield break;
-
-        animator.SetBool("isEat", false);
-
-
-
         time = 1;
         yield return new WaitForSeconds(time);
 
         if (IsDead) yield break;
 
-        IsAttacking = false;
+        // 애니메이션 종료
+        animator.SetBool("isEat", false);
+
+
+
+        time = 0.5f;
+        yield return new WaitForSeconds(time);
+
+        if (IsDead) yield break;
+
+        IsAttacking = false; // 공격 종료
     }
 
     // Sniff
     private IEnumerator Sniff() {
-        isAttacking = true;
+        isAttacking = true; // 공격 시작
+
+        // 애니메이션 시작
         animator.SetBool("isSniff", true);
 
 
@@ -592,19 +640,20 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
         float time = 1.105f;
         yield return new WaitForSeconds(time);
 
-        int childCount = sniffTransform.childCount;
+        int childCount = lightningStrikeEffectTransform.childCount;
         for (int i = 0; i < childCount; i++) {
             if (IsDead) yield break;
 
-            Transform child = sniffTransform.GetChild(i);
-            Vector3 position = child.transform.position;
-            Quaternion rotation = sniffEffect.transform.rotation;
-
-            GameObject firstEffect = Instantiate(sniffEffect, position, rotation);
-            SniffEffect effect = firstEffect.GetComponent<SniffEffect>();
-            effect.caster = gameObject;
-            effect.damage = 20;
-            Destroy(firstEffect, 1);
+            // 파티클 생성
+            Transform child = lightningStrikeEffectTransform.GetChild(i);
+            Vector3 lightningStrikeEffectPosition = child.position;
+            Quaternion lightningStrikeEffectRotation = child.rotation;
+            GameObject lightningStrikeEffectParticle = Instantiate(lightningStrikeEffect, lightningStrikeEffectPosition, lightningStrikeEffectRotation);
+            LightningStrikeEffect lightningStrikeEffectScript = lightningStrikeEffectParticle.GetComponent<LightningStrikeEffect>();
+            lightningStrikeEffectScript.size = 2;
+            lightningStrikeEffectScript.caster = gameObject;
+            lightningStrikeEffectScript.damage = 30;
+            Destroy(lightningStrikeEffectParticle, 1);
 
             time = 0.75f / childCount;
             yield return new WaitForSeconds(time);
@@ -617,6 +666,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         if (IsDead) yield break;
 
+        // 애니메이션 종료
         animator.SetBool("isSniff", false);
 
 
@@ -626,7 +676,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
         if (IsDead) yield break;
 
-        isAttacking = false;
+        isAttacking = false; // 공격 종료
     }
 
 

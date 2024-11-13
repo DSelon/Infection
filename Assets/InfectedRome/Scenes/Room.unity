@@ -5680,6 +5680,7 @@ MonoBehaviour:
   defeatMusics:
   - {fileID: 8300000, guid: 0b9a6f8966970844699da720c828c33e, type: 3}
   - {fileID: 8300000, guid: 3c261a9a379a66242bd690a72ea199cf, type: 3}
+  gameProgress: 0
 --- !u!1 &1283052363
 GameObject:
   m_ObjectHideFlags: 0
@@ -10377,25 +10378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd41e591d9da70946984148b125267e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5866666021809645335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149257136077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23eca951118042d48ac83175c5661e53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  auraReleaseIcon: {fileID: 21300000, guid: e0f4c58ba83d4924d9a92943327992dd, type: 3}
-  pheonixSlashIcon: {fileID: 21300000, guid: fa95ea0bb97b3a147ac2a162eaf01243, type: 3}
-  electricWhirlwindIcon: {fileID: 21300000, guid: 866ae5d47b649c74b9b54e5d7087bab7, type: 3}
-  rollingIcon: {fileID: 21300000, guid: 0c61888b3ac93ca43b46438f6c767151, type: 3}
-  barrierIcon: {fileID: 21300000, guid: f4f66bf32f899f74d9a8d1cb5f53df58, type: 3}
-  healingAreaIcon: {fileID: 21300000, guid: 7775288d67a0f1f4db701be6420b037c, type: 3}
-  emptyIcon: {fileID: 21300000, guid: 9f75a268b1ccd91499525e668b53899d, type: 3}
 --- !u!4 &5880523505618506160
 Transform:
   m_ObjectHideFlags: 0
@@ -10512,35 +10494,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6948428544391336633, guid: 8460bb2314d7a6642a626f49c512c092, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5866666021809645335}
-    - targetCorrespondingSourceObject: {fileID: 8466722031955329137, guid: 8460bb2314d7a6642a626f49c512c092, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6111590326249733599}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8460bb2314d7a6642a626f49c512c092, type: 3}
---- !u!1 &6111590326249733598 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8466722031955329137, guid: 8460bb2314d7a6642a626f49c512c092, type: 3}
-  m_PrefabInstance: {fileID: 6111590326249733597}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6111590326249733599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6111590326249733598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79e524fae183a8f42ac926d5c863d13c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <icon>k__BackingField: {fileID: 21300000, guid: 7775288d67a0f1f4db701be6420b037c, type: 3}
-  skillEffects:
-  - {fileID: 1708544336482566, guid: 249a5e6045d595c4384b1b60337eea75, type: 3}
-  - {fileID: 105942, guid: db2ef6fda6e8ed44f83c786e79b815d5, type: 3}
 --- !u!4 &6307263148428382922
 Transform:
   m_ObjectHideFlags: 0

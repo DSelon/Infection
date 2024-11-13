@@ -8,27 +8,25 @@ public class RollingAbility : MonoBehaviour, IAbility {
     public float maxCooldown { get; set; } = 4;
     public float currentCooldown { get; set; }
 
-
-
     // Option
     public float operatingSpeed { get; set; } = 1;
-    public float operatingTime { get; set; } = 0.48f;
-    public float[] particleLivingTimes { get; set; } = { 10, 1, 1 };
-
-
 
     // Object
     [field: SerializeField] public Sprite icon { get; set; }
-    public GameObject[] skillEffects = new GameObject[3];
-
-
+    [Header("Jump Up Effect")]
+    public GameObject jumpUpEffect;
+    public Transform jumpUpEffectTransform;
+    [Header("High Speed Effect")]
+    public GameObject highSpeedEffect;
+    public Transform highSpeedEffectTransform;
+    [Header("Jump Down Effect")]
+    public GameObject jumpDownEffect;
+    public Transform jumpDownEffectTransform;
 
     // Tree
     [NonSerialized] public bool cooldownTree = false;
     [NonSerialized] public bool recoveryHealthTree = false;
     [NonSerialized] public bool incresedMoveSpeedTree = false;
-
-
 
 
 
@@ -58,41 +56,82 @@ public class RollingAbility : MonoBehaviour, IAbility {
 
         currentCooldown = 0;
 
-        StartCoroutine(CUseAbility_RunAnimation(player));
-        StartCoroutine(CUseAbility_Move(player));
-        StartCoroutine(CUseAbility_GenerateParticle(player));
+        StartCoroutine(CUseAbility(player));
 
     }
-    
-    public IEnumerator CUseAbility_RunAnimation(Player player) {
-        player.IsOperating = true;
-        player.IsCasting = true;
-        player.InvincibilityTime = player.InvincibilityTime > operatingTime / operatingSpeed ? player.InvincibilityTime : operatingTime / operatingSpeed;
+
+    private IEnumerator CUseAbility(Player player) {
+        player.IsOperating = true; // 동작 시작
+        player.IsCasting = true; // 캐스팅 시작
+        player.InvincibilityTime = player.InvincibilityTime > 0.48f / operatingSpeed ? player.InvincibilityTime : 0.48f / operatingSpeed; // 무적 시간 적용
 
         player.Heal(recoveryHealthTree ? player.MaxHealth * 0.05f : 0);
 
+        // 애니메이션 실행
         player.animator.SetBool("isUsingAbility_Rolling", true);
         player.animator.SetFloat("usingAbilitySpeed", operatingSpeed);
 
-        float time = operatingTime / operatingSpeed;
+        // 위치 이동
+        StartCoroutine(CUseAbility_Move(player));
+
+        // 파티클 생성
+        Vector3 jumpUpEffectPosition = jumpUpEffectTransform.position;
+        Quaternion jumpUpEffectRotation = jumpUpEffectTransform.rotation;
+        GameObject jumpUpEffectParticle = Instantiate(jumpUpEffect, jumpUpEffectPosition, jumpUpEffectRotation);
+        JumpUpEffect jumpUpEffectScript = jumpUpEffectParticle.GetComponent<JumpUpEffect>();
+        float jumpUpEffectSize = 1;
+        jumpUpEffectScript.size = jumpUpEffectSize;
+        Destroy(jumpUpEffectParticle, 1);
+
+
+
+        float time = 0.24f / operatingSpeed;
         yield return new WaitForSeconds(time);
 
+        // 파티클 생성
+        Vector3 highSpeedEffectPosition = highSpeedEffectTransform.position;
+        Quaternion highSpeedEffectRotation = highSpeedEffectTransform.rotation;
+        GameObject highSpeedEffectParticle = Instantiate(highSpeedEffect, highSpeedEffectPosition, highSpeedEffectRotation);
+        HighSpeedEffect highSpeedEffectScript = highSpeedEffectParticle.GetComponent<HighSpeedEffect>();
+        float highSpeedEffectSize = 2;
+        highSpeedEffectScript.size = highSpeedEffectSize;
+        Destroy(highSpeedEffectParticle, 1);
+
+
+
+        time = 0.24f / operatingSpeed;
+        yield return new WaitForSeconds(time);
+
+        // 파티클 생성
+        Vector3 jumpDownEffectPosition = jumpDownEffectTransform.position;
+        Quaternion jumpDownEffectRotation = jumpDownEffectTransform.rotation;
+        GameObject jumpDownEffectParticle = Instantiate(jumpDownEffect, jumpDownEffectPosition, jumpDownEffectRotation);
+        JumpDownEffect jumpDownEffectScript = jumpDownEffectParticle.GetComponent<JumpDownEffect>();
+        float jumpDownEffectSize = 1;
+        jumpDownEffectScript.size = jumpDownEffectSize;
+        GameObject jumpDownEffectCaster = player.gameObject;
+        jumpDownEffectScript.caster = jumpDownEffectCaster;
+        float jumpDownEffectDamage = 0;
+        jumpDownEffectScript.damage = jumpDownEffectDamage;
+        Destroy(jumpDownEffectParticle, 1);
+
+        // 애니메이션 종료
         player.animator.SetBool("isUsingAbility_Rolling", false);
 
-        player.IsCasting = false;
-        player.IsOperating = false;
+        player.IsCasting = false; // 캐스팅 종료
+        player.IsOperating = false; // 동작 종료
 
-        if (incresedMoveSpeedTree) StartCoroutine(CUseAbility_IncreasedMoveSpeed(player));
-    }
+        if (incresedMoveSpeedTree) {
+            float moveSpeed = player.MoveSpeed;
+            player.MoveSpeed += moveSpeed * 0.3f; // 속도 증가 효과 적용
 
-    public IEnumerator CUseAbility_IncreasedMoveSpeed(Player player) {
-        float moveSpeed = player.MoveSpeed;
-        player.MoveSpeed += moveSpeed * 0.3f;
 
-        float time = 2;
-        yield return new WaitForSeconds(time);
 
-        player.MoveSpeed = moveSpeed;
+            time = 2 / operatingSpeed;
+            yield return new WaitForSeconds(time);
+
+            player.MoveSpeed = moveSpeed; // 속도 증가 효과 적용 해제
+        }
     }
 
     public IEnumerator CUseAbility_Move(Player player) {
@@ -106,7 +145,7 @@ public class RollingAbility : MonoBehaviour, IAbility {
         direction.Normalize();
 
         float deltaTime = 0;
-        while (deltaTime < operatingTime / operatingSpeed) {
+        while (deltaTime < 0.48f / operatingSpeed) {
             deltaTime += Time.deltaTime;
 
             player.controller.SimpleMove(direction * 15.0f); // 이동
@@ -116,38 +155,6 @@ public class RollingAbility : MonoBehaviour, IAbility {
 
         player.transform.Rotate(new Vector3(0, 180, 0));
 
-    }
-
-    public IEnumerator CUseAbility_GenerateParticle(Player player) {
-        Transform playerTransform = player.transform;
-
-        // 파티클 재생
-        Vector3 firstPosition = playerTransform.transform.position;
-        firstPosition.y += 0f;
-        Quaternion firstRotation = skillEffects[0].transform.rotation;
-        GameObject firstParticle = Instantiate(skillEffects[0], firstPosition, firstRotation);
-        Destroy(firstParticle, particleLivingTimes[0]);
-
-
-
-        float time = operatingTime / 2 / operatingSpeed;
-        yield return new WaitForSeconds(time);
-
-        Vector3 secondPosition = playerTransform.transform.position;
-        secondPosition.y += 0.5f;
-        GameObject secondParticle = Instantiate(skillEffects[1], secondPosition, playerTransform.rotation);
-        Destroy(secondParticle, particleLivingTimes[1]);
-
-
-
-        time = operatingTime / 2 / operatingSpeed;
-        yield return new WaitForSeconds(time);
-
-        Vector3 thirdPosition = playerTransform.transform.position;
-        thirdPosition.y += 0f;
-        Quaternion thirdRotation = skillEffects[2].transform.rotation;
-        GameObject thirdParticle = Instantiate(skillEffects[2], thirdPosition, thirdRotation);
-        Destroy(thirdParticle, particleLivingTimes[2]);
     }
 
 }

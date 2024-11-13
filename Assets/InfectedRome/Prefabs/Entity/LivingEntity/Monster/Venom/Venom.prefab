@@ -836,6 +836,7 @@ Transform:
   - {fileID: 315355806714720205}
   - {fileID: 2162937499005650856}
   - {fileID: 6200631172792933314}
+  - {fileID: 1892537751014687674}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1159077425830953473
@@ -1042,7 +1043,8 @@ MonoBehaviour:
   target: {fileID: 0}
   exp: {fileID: 2181183702442550740, guid: f584333630bfea8488e3dc70cc01a70e, type: 3}
   bloodParticle: {fileID: 167524, guid: 56fb838631879a4458ee929c4b3f2b97, type: 3}
-  venomExplosionParticle: {fileID: 164384, guid: c05612b9547bb4348a3301d8d5d529ca, type: 3}
+  venomExplosionEffect: {fileID: 164384, guid: c05612b9547bb4348a3301d8d5d529ca, type: 3}
+  venomExplosionEffectTransform: {fileID: 1892537751014687674}
   growlSounds:
   - {fileID: 8300000, guid: cca2cc1f5a17fa0499dd0a59be0ba049, type: 3}
   - {fileID: 8300000, guid: b8acf37f70528b64f8938b2acfc3d959, type: 3}
@@ -1868,6 +1870,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 477023199324896686}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5780238072349671426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1892537751014687674}
+  m_Layer: 0
+  m_Name: VenomExplosionEffectTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1892537751014687674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5780238072349671426}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7591920313385126205}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5781115295071932355
 GameObject:

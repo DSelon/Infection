@@ -1,7 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour {
+
+    // Event
+    public Action MonsterSpawn;
+
+
 	
     [field: Header("Player")]
     [field: SerializeField] public GameObject player;
@@ -49,7 +55,7 @@ public class MonsterSpawner : MonoBehaviour {
         }
     }
 
-    public void SpawnMonster(int spawnerNumber, int monsterNumber) {
+    public void SpawnMonster(int spawnerNumber, int monsterNumber, int count = 1) {
         // 소환될 몬스터 종류 지정
         GameObject monster;
         switch (monsterNumber) {
@@ -70,9 +76,13 @@ public class MonsterSpawner : MonoBehaviour {
                 break;
         }
 
-        GameObject spawnedMonster = Instantiate(monster, spawnTransform[spawnerNumber].position, spawnTransform[spawnerNumber].rotation); // 소환될 몬스터 위치 지정
-        spawnedMonster.GetComponent<IMonster>().Target = player; // 소환된 몬스터의 타겟 지정
+        for (int i = 0; i < count; i++) {
+            GameObject spawnedMonster = Instantiate(monster, spawnTransform[spawnerNumber].position, spawnTransform[spawnerNumber].rotation); // 소환될 몬스터 위치 지정
+            spawnedMonster.GetComponent<IMonster>().Target = player; // 소환된 몬스터의 타겟 지정
 
-        SpawnedMonsters.Add(spawnedMonster); // 소환된 몬스터 목록에 추가
+            SpawnedMonsters.Add(spawnedMonster); // 소환된 몬스터 목록에 추가
+        }
+
+        MonsterSpawn?.Invoke();
     }
 }

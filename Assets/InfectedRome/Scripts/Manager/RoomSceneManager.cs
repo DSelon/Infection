@@ -1,19 +1,21 @@
 using System.Collections;
-using System.Linq;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 using VInspector;
 
 public class RoomSceneManager : Singleton<RoomSceneManager> {
+
+    public enum GameProgress {
+        Start,
+        End
+    }
     
 	[SerializeField] private GameObject camera;
     private AudioSource bgmSource;
     private AudioSource seSource;
     [SerializeField] private MonsterSpawner monsterSpawner;
     [SerializeField] private Player player;
-    private Creep creep;
-    private bool isCreepNull;
     [SerializeField] private GameObject blackDisplay;
     [SerializeField] private GameObject treeObject;
     private GameObject treeCardBundle;
@@ -51,6 +53,8 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     [SerializeField] private AudioClip[] defeatMusics;
     [EndFoldout]
 
+    public GameProgress gameProgress;
+
 
 
 
@@ -58,9 +62,9 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     private void Start() {
         bgmSource = camera.GetComponents<AudioSource>()[0];
         seSource = camera.GetComponents<AudioSource>()[1];
+        monsterSpawner.MonsterSpawn += OnMonsterSpawn;
         player.PlayerLevelUp += OnPlayerLevelUp;
         player.PlayerDeath += OnPlayerDeath;
-        isCreepNull = true;
         treeCardBundle = treeObject.transform.GetChild(1).gameObject;
         treeCard1Button = treeCardBundle.transform.GetChild(0).gameObject;
         treeCard2Button = treeCardBundle.transform.GetChild(1).gameObject;
@@ -76,6 +80,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
         scoreReplayButtonText = scoreReplayButton.transform.GetChild(2).GetComponent<Text>();
         scoreQuitButton = scoreWindowTransform.GetChild(3).gameObject;
         scoreQuitButtonText = scoreQuitButton.transform.GetChild(2).GetComponent<Text>();
+        gameProgress = GameProgress.Start;
 
 
 
@@ -94,17 +99,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     }
 
     private void Update() {
-        foreach (GameObject gameObject in monsterSpawner.SpawnedMonsters) {
-            if (gameObject.GetComponent<Creep>() != null) {
-                isCreepNull = false;
-                creep = gameObject.GetComponent<Creep>();
-                creep.CreepDeath += OnCreepDeath;
-                break;
-            }
-        }
-
-        if (player.IsDead
-        || (creep != null && creep.IsDead)) return;
+        if (gameProgress == GameProgress.End) return;
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Animator pauseAnimator = pauseWindowTransform.GetComponent<Animator>();
@@ -429,10 +424,27 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
 
 
+    // 몬스터 소환 이벤트
+    private void OnMonsterSpawn() {
+        Creep creep = null;
+        foreach (GameObject spawnedMonster in monsterSpawner.SpawnedMonsters) {
+            if (spawnedMonster.GetComponent<Creep>() != null) {
+                creep = spawnedMonster.GetComponent<Creep>();
+                break;
+            }
+        }
+
+        if (creep == null) return;
+
+        creep.CreepDeath += OnCreepDeath;
+    }
+    
+    
+    
     // 플레이어 레벨 업 이벤트
     private void OnPlayerLevelUp() {
 
-        if (creep != null && creep.IsDead) return;
+        if (gameProgress == GameProgress.End) return;
 
         Time.timeScale = 0;
         
@@ -456,7 +468,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     
     // 플레이어 사망 이벤트
     private void OnPlayerDeath() {
-        if (creep.IsDead) return;
+        if (gameProgress == GameProgress.End) return;
 
         StartCoroutine(COnPlayerDeath());
     }
@@ -497,7 +509,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
     // Creep 사망 이벤트
     private void OnCreepDeath() {
-        if (player.IsDead) return;
+        if (gameProgress == GameProgress.End) return;
 
         StartCoroutine(COnCreepDeath());
     }

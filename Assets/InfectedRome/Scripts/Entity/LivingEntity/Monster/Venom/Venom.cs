@@ -91,7 +91,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
 
 
     // Option
-    private float attackSpeed = 1.0f;
+    private float attackSpeed;
     public float AttackSpeed {
 
         get {
@@ -103,7 +103,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
         }
 
     }
-    private float attackTime = 0.3f;
+    private float attackTime;
     public float AttackTime {
 
         get {
@@ -115,7 +115,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
         }
 
     }
-    private float detectDistance = 100.0f;
+    private float detectDistance;
     public float DetectDistance {
         
         get {
@@ -127,7 +127,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
         }
 
     }
-    private float attackDistance = 1.5f;
+    private float attackDistance;
     public float AttackDistance {
         
         get {
@@ -138,7 +138,6 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
             attackDistance = value;
         }
     }
-    public float particleLivingTime { get; set; } = 1.0f;
 
 
 
@@ -157,7 +156,8 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
     }
     public GameObject exp;
     public GameObject bloodParticle;
-    public GameObject venomExplosionParticle;
+    public GameObject venomExplosionEffect;
+    public Transform venomExplosionEffectTransform;
 
     public AudioClip[] growlSounds;
     public AudioClip deathSound;
@@ -174,6 +174,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
 
     private void Start() {
         StatusInit();
+        OptionInit();
 
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -202,12 +203,21 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
     
     // 스테이터스 초기화
     protected virtual void StatusInit() {
-        MaxHealth = 30.0f;
+        MaxHealth = 30;
         CurrentHealth = MaxHealth;
-        MoveSpeed = 2.0f;
-        AttackPower = 20.0f;
+        MoveSpeed = 2;
+        AttackPower = 20;
         IsDead = MaxHealth > 0 ? false : true;
         IsAttacking = false;
+    }
+
+    // 옵션 초기화
+    protected virtual void OptionInit()
+    {
+        AttackSpeed = 1;
+        AttackTime = 0.3f;
+        DetectDistance = 500;
+        AttackDistance = 2;
     }
     
     
@@ -287,14 +297,15 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
         float time = attackTime / attackSpeed / 2;
         yield return new WaitForSeconds(time);
 
-        // 대상 공격
-        Vector3 position = transform.position;
-        position.y += 0.5f;
-        GameObject particle = Instantiate(venomExplosionParticle, position, transform.rotation);
-        VenomEffect venomExplosion = particle.GetComponent<VenomEffect>();
-        venomExplosion.caster = gameObject;
-        venomExplosion.damage = AttackPower;
-        Destroy(particle, particleLivingTime);
+        // 파티클 생성
+        Vector3 venomExplosionEffectPosition = venomExplosionEffectTransform.position;
+        Quaternion venomExplosionEffectRotation = venomExplosionEffectTransform.rotation;
+        GameObject venomExplosionEffectParticle = Instantiate(venomExplosionEffect, venomExplosionEffectPosition, venomExplosionEffectRotation);
+        VenomExplosionEffect venomExplosionEffectScript = venomExplosionEffectParticle.GetComponent<VenomExplosionEffect>();
+        venomExplosionEffectScript.size = 1;
+        venomExplosionEffectScript.caster = gameObject;
+        venomExplosionEffectScript.damage = AttackPower;
+        Destroy(venomExplosionEffectParticle, 1);
         Destroy(gameObject);
     }
 

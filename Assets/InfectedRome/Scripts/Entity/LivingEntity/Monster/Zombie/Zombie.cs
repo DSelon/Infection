@@ -198,20 +198,20 @@ public class Zombie : MonoBehaviour, ILivingEntity, IMonster {
     
     // 스테이터스 초기화
     protected virtual void StatusInit() {
-        MaxHealth = 50.0f;
+        MaxHealth = 50;
         CurrentHealth = MaxHealth;
-        MoveSpeed = 3.0f;
-        AttackPower = 10.0f;
+        MoveSpeed = 3;
+        AttackPower = 10;
         IsDead = MaxHealth > 0 ? false : true;
         IsAttacking = false;
     }
 
     // 옵션 초기화
     protected virtual void OptionInit() {
-        AttackSpeed = 1.0f;
+        AttackSpeed = 1;
         AttackTime = 0.3f;
-        DetectDistance = 100.0f;
-        AttackDistance = 1.0f;
+        DetectDistance = 500;
+        AttackDistance = 1;
     }
     
     

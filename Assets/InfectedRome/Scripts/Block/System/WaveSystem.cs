@@ -42,31 +42,34 @@ public class WaveSystem : MonoBehaviour {
         int spawnerCount = monsterSpawner.spawnTransform.Length;
         switch (waveNumber) {
             case 1:
-                StartCoroutine(CSpawnMonster(0, 0, 0));
+                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
 
                 yield return new WaitForSeconds(1);
                 break;
             case 2:
-                StartCoroutine(CSpawnMonster(0, 0, 0));
+                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
+                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
 
                 yield return new WaitForSeconds(1);
                 break;
             case 3:
-                StartCoroutine(CSpawnMonster(0, 0, 0));
+                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
+                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
+                for (int j = 0; j < 15; j += 4) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
 
                 yield return new WaitForSeconds(1);
                 break;
             case 4:
-                StartCoroutine(CSpawnMonster(0, 0, 0));
+                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
+                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
+                for (int j = 0; j < 15; j += 3) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
 
                 yield return new WaitForSeconds(1);
                 break;
             case 5:
-                StartCoroutine(CSpawnMonster(0, 0, 0));
-
-                for (int i = 0; i < 30; i++) {
-                    StartCoroutine(CSpawnMonster(0, Random.Range(0, spawnerCount), 0));
-                }
+                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
+                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
+                for (int j = 0; j < 12; j += 3) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
 
                 StartCoroutine(CSpawnMonster(0, Random.Range(0, spawnerCount), 3));
 
@@ -101,9 +104,9 @@ public class WaveSystem : MonoBehaviour {
         waveText.SetActive(false);
     }
 
-    private IEnumerator CSpawnMonster(float time, int spawnerNumber, int monsterNumber) {
+    private IEnumerator CSpawnMonster(float time, int spawnerNumber, int monsterNumber, int count = 1) {
         yield return new WaitForSeconds(time);
-        monsterSpawner.SpawnMonster(spawnerNumber, monsterNumber);
+        monsterSpawner.SpawnMonster(spawnerNumber, monsterNumber, count);
     }
 
 }
