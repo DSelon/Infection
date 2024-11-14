@@ -1,13 +1,11 @@
 using UnityEngine;
 
-public class ElectricSlashEffect : MonoBehaviour {
+public class GasEffect : MonoBehaviour {
 
     public float size { get; set; }
 
     public GameObject caster { get; set; }
     public float damage { get; set; }
-
-    public ElectricWhirlwindAbility electricWhirlwindAbility;
 
 
 
@@ -30,17 +28,9 @@ public class ElectricSlashEffect : MonoBehaviour {
         if (livingEntity == null) return;
 
         IMonster monster = otherGameObject.GetComponent<IMonster>();
-        if ((monster == null) == (caster.GetComponent<IMonster>() == null)) return;
+        if (monster != null) return;
 
-        livingEntity.Damage(damage * Time.deltaTime, Random.Range(0, 5) == 0);
-
-
-
-        Player player = caster.GetComponent<Player>();
-        if (player == null) return;
-        if (player.IsDead) return;
-
-        player.Heal(electricWhirlwindAbility.bloodSuckingTree ? damage * Time.deltaTime * 0.01f : 0);
+        livingEntity.Damage(damage * Time.deltaTime , Random.Range(0, 5) == 0);
     }
 
 }

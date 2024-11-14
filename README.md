@@ -8,9 +8,11 @@ Unity graduation work game project
 * Epic Toon FX
 * 5800 Fantasy RPG Icons Pack
 * Medieval Kingdom UI
+* Morbid Creatures: Mutant 1
 * Nodachi AnimSet
 * Magic Slashes FX
 * Ultimate Game Music Collection
 * Ultimate Sound FX Bundle
 * Unity-Chan! Model
 * Zombie
+* Hungry Zombie

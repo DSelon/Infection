@@ -43,6 +43,8 @@ public class WaveSystem : MonoBehaviour {
         switch (waveNumber) {
             case 1:
                 for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
+                // for (int j = 0; j < 12; j += 4) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
+                // for (int j = 0; j < 15; j += 4) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
 
                 yield return new WaitForSeconds(1);
                 break;

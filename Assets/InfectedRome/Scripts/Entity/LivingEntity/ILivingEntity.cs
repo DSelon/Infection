@@ -9,7 +9,7 @@ public interface ILivingEntity {
 
 
     void Heal(float amount);
-    void Damage(float amount);
+    void Damage(float amount, bool isGenerateBloodEffect = true);
     void Die();
 
 }

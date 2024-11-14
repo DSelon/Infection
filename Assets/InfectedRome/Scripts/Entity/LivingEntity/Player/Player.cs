@@ -490,7 +490,7 @@ public class Player : MonoBehaviour, ILivingEntity {
     }
 
     // 피해
-    public void Damage(float amount) {
+    public void Damage(float amount, bool isGenerateBloodEffect = true) {
         if (amount < 0) amount = 0;
 
         if (IsInvincibility) return;
@@ -500,11 +500,14 @@ public class Player : MonoBehaviour, ILivingEntity {
         // 현재 체력 수치 적용
         CurrentHealth = Mathf.Max(CurrentHealth - amount * (1 - damageReduction), 0);
 
-        // 파티클 재생
-        Vector3 particlePosition = transform.position;
-        particlePosition.y += 1.0f;
-        GameObject particle = Instantiate(bloodParticle, particlePosition, transform.rotation);
-        Destroy(particle, 1.0f);
+        if (isGenerateBloodEffect) {
+            // 파티클 재생
+            Vector3 particlePosition = transform.position;
+            particlePosition.y += 1.0f;
+            GameObject particle = Instantiate(bloodParticle, particlePosition, transform.rotation);
+            Destroy(particle, 1.0f);
+        }
+        
 
         // 효과음 재생
         source.clip = hitSounds[UnityEngine.Random.Range(0, hitSounds.Length)];

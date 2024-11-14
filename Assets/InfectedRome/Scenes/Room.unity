@@ -509,8 +509,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 919132149257136077}
   grayZombie: {fileID: 2865028399606961730, guid: 1fcb52d5a8e38e940883c48083aafd3c, type: 3}
-  redZombie: {fileID: 2865028399606961730, guid: e9ad82ea39d6dae46b5c3fa5d03f210c, type: 3}
-  venom: {fileID: 2865028399606961730, guid: feda69656b01d214b8b5f5e1eaf53e22, type: 3}
+  redZombie: {fileID: 1352753540370996, guid: 328c53bb96bc0f24f8d3e2631e5bbab4, type: 3}
+  venom: {fileID: 2043919424448136195, guid: 54947a21643719f43abf8672d0c46654, type: 3}
   creep: {fileID: 7319784377344081870, guid: dc43b9c4acafcf7468f53175d4cccb41, type: 3}
 --- !u!1 &104942711
 GameObject:
@@ -5676,7 +5676,6 @@ MonoBehaviour:
   buttonClickSound: {fileID: 8300000, guid: 7ca0aae56a09e7143a11de65e62eceea, type: 3}
   victoryMusics:
   - {fileID: 8300000, guid: c03e8651188b16b43b8a6575aaa18f45, type: 3}
-  - {fileID: 8300000, guid: 499d710bff0ff8a47803d4d7a0806850, type: 3}
   defeatMusics:
   - {fileID: 8300000, guid: 0b9a6f8966970844699da720c828c33e, type: 3}
   - {fileID: 8300000, guid: 3c261a9a379a66242bd690a72ea199cf, type: 3}

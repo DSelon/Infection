@@ -693,7 +693,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
 
     // 피해
-    public void Damage(float amount) {
+    public void Damage(float amount, bool isGenerateBloodEffect = true) {
         if (amount < 0) return;
 
 
@@ -701,11 +701,13 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
         // 현재 체력 수치 적용
         CurrentHealth = Mathf.Max(CurrentHealth - amount, 0);
 
-        // 파티클 재생
-        Vector3 particlePosition = transform.position;
-        particlePosition.y += 3.0f;
-        GameObject particle = Instantiate(bloodParticle, particlePosition, transform.rotation);
-        Destroy(particle, 1.0f);
+        if (isGenerateBloodEffect) {
+            // 파티클 재생
+            Vector3 particlePosition = transform.position;
+            particlePosition.y += 3.0f;
+            GameObject particle = Instantiate(bloodParticle, particlePosition, transform.rotation);
+            Destroy(particle, 1.0f);
+        }
 
 
 

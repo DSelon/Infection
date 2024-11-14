@@ -156,9 +156,14 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
     }
     public GameObject exp;
     public GameObject bloodParticle;
+    [Header("Venom Explosion Effect")]
     public GameObject venomExplosionEffect;
     public Transform venomExplosionEffectTransform;
+    [Header("Gas Effect")]
+    public GameObject gasEffect;
+    public Transform gasEffectTransform;
 
+    [Header("")]
     public AudioClip[] growlSounds;
     public AudioClip deathSound;
 
@@ -217,7 +222,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
         AttackSpeed = 1;
         AttackTime = 0.3f;
         DetectDistance = 500;
-        AttackDistance = 2;
+        AttackDistance = 2.5f;
     }
     
     
@@ -302,10 +307,22 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
         Quaternion venomExplosionEffectRotation = venomExplosionEffectTransform.rotation;
         GameObject venomExplosionEffectParticle = Instantiate(venomExplosionEffect, venomExplosionEffectPosition, venomExplosionEffectRotation);
         VenomExplosionEffect venomExplosionEffectScript = venomExplosionEffectParticle.GetComponent<VenomExplosionEffect>();
-        venomExplosionEffectScript.size = 1;
+        venomExplosionEffectScript.size = 1.2f;
         venomExplosionEffectScript.caster = gameObject;
         venomExplosionEffectScript.damage = AttackPower;
+        CoroutineUtility.CallWaitForSeconds(0.1f, () => { venomExplosionEffectParticle.GetComponent<SphereCollider>().enabled = false; });
         Destroy(venomExplosionEffectParticle, 1);
+
+        // 파티클 생성
+        Vector3 gasEffectPosition = gasEffectTransform.position;
+        Quaternion gasEffectRotation = gasEffectTransform.rotation;
+        GameObject gasEffectParticle = Instantiate(gasEffect, gasEffectPosition, gasEffectRotation);
+        GasEffect gasEffectScript = gasEffectParticle.GetComponent<GasEffect>();
+        gasEffectScript.size = 1;
+        gasEffectScript.caster = gameObject;
+        gasEffectScript.damage = 10;
+        Destroy(gasEffectParticle, 5);
+
         Destroy(gameObject);
     }
 
@@ -332,7 +349,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
 
 
     // 피해
-    public void Damage(float amount) {
+    public void Damage(float amount, bool isGenerateBloodEffect = true) {
         if (amount < 0) return;
 
 
@@ -340,11 +357,13 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
         // 현재 체력 수치 적용
         CurrentHealth = Mathf.Max(CurrentHealth - amount, 0);
 
-        // 파티클 재생
-        Vector3 particlePosition = transform.position;
-        particlePosition.y += 1.0f;
-        GameObject particle = Instantiate(bloodParticle, particlePosition, transform.rotation);
-        Destroy(particle, 1.0f);
+        if (isGenerateBloodEffect) {
+            // 파티클 재생
+            Vector3 particlePosition = transform.position;
+            particlePosition.y += 1.0f;
+            GameObject particle = Instantiate(bloodParticle, particlePosition, transform.rotation);
+            Destroy(particle, 1.0f);
+        }
 
 
 
