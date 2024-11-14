@@ -126,6 +126,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
         }
 
     }
+    public GameObject camera;
     public GameObject bloodParticle;
     [Header("Jump Up Effect")]
     public GameObject jumpUpEffect;
@@ -231,10 +232,10 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
                     if (4 >= distance) {
                         Attack(target, 0);
                     }
-                    else if (10 >= distance && distance > 4) {
+                    else if (8 >= distance && distance > 4) {
                         Chase(targetTransform); // 추격
                     }
-                    else if (12 >= distance && distance > 10) {
+                    else if (12 >= distance && distance > 8) {
                         int randomNumber = UnityEngine.Random.Range(0, 1000);
                         if (3 > randomNumber && randomNumber >= 0) {
                             Attack(target, 2);
@@ -347,10 +348,8 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
         // 애니메이션 재생
         animator.SetBool("isPunch", true);
 
-        // 추격 대상 설정
-        navMeshAgent.speed = 0.1f;
-        Transform targetTransform = Target.transform;
-        navMeshAgent.SetDestination(targetTransform.position);
+        // 회전
+        transform.LookAt(Target.transform);
 
         // 효과음 재생
         source.clip = punchSounds[0];
@@ -487,6 +486,15 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
         jumpDownSource.volume = PlayerPrefs.GetFloat("Option_SEVolume");
         jumpDownSource.Play();
 
+        // 카메라 흔들림 효과 부여
+        Transform cameraTransform = camera.transform;
+        Vector3 cameraPosition = cameraTransform.position;
+        cameraTransform.position = new Vector3(cameraPosition.x, cameraPosition.y + 1.5f, cameraPosition.z);
+        CoroutineUtility.CallWaitForSeconds(0.25f, () => {
+            cameraPosition = cameraTransform.position;
+            cameraTransform.position = new Vector3(cameraPosition.x, cameraPosition.y + 0.75f, cameraPosition.z);
+        });
+
 
 
         time = 0.4f;
@@ -516,7 +524,17 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
 
 
-        float time = 0.605f;
+        float time = 0.305f;
+        yield return new WaitForSeconds(time);
+
+        if (IsDead) yield break;
+
+        // 회전
+        transform.LookAt(Target.transform);
+
+
+
+        time = 0.3f;
         yield return new WaitForSeconds(time);
 
         if (IsDead) yield break;
@@ -563,10 +581,8 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
         // 애니메이션 재생
         animator.SetBool("isEat", true);
 
-        // 추격 대상 설정
-        navMeshAgent.speed = 0.1f;
-        Transform targetTransform = Target.transform;
-        navMeshAgent.SetDestination(targetTransform.position);
+        // 회전
+        transform.LookAt(Target.transform);
 
 
 

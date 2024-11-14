@@ -84,7 +84,8 @@ crashlytics-build.properties
 /Assets/Ultimate Game Music Collection/
 /Assets/Ultimate SFX Bundle - HD Remaster/
 /Assets/unity-chan!/
-/Assets/Zombie/
+/Assets/Zombie1/
+/Assets/Zombie2/
 
 Assets/_DLNK.meta
 Assets/Allsky.meta
@@ -98,4 +99,5 @@ Assets/OrdosFX.meta
 Assets/Ultimate Game Music Collection.meta
 Assets/Ultimate SFX Bundle - HD Remaster.meta
 Assets/unity-chan!.meta
-Assets/Zombie.meta
+Assets/Zombie1.meta
+Assets/Zombie2.meta

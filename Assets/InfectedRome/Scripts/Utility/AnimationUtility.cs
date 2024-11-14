@@ -1,6 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
+// using UnityEditor.Animations;
 using UnityEngine;
 
 public class AnimationUtility : MonoBehaviour {
@@ -15,6 +14,7 @@ public class AnimationUtility : MonoBehaviour {
     }
 
     // 애니메이터의 모든 상태 얻기
+    /*
     public static List<AnimatorState> GetAnimatorStates(Animator animator) {
         AnimatorController animatorController = animator.runtimeAnimatorController as AnimatorController;
         AnimatorControllerLayer[] animatorControllerLayers = animatorController.layers;
@@ -31,8 +31,10 @@ public class AnimationUtility : MonoBehaviour {
 
         return states;
     }
+    */
 
     // 애니메이터 상태 얻기
+    /*
     public static AnimatorState GetAnimatorState(Animator animator, string name) {
         foreach (AnimatorState state in GetAnimatorStates(animator)) {
             if (state.name == name) return state;
@@ -40,6 +42,7 @@ public class AnimationUtility : MonoBehaviour {
 
         return null;
     }
+    */
     
 
 
@@ -50,8 +53,9 @@ public class AnimationUtility : MonoBehaviour {
         animator.SetBool("isPointerDown", true);
 
         AnimationClip clip = GetAnimationClipInAnimator(animator, "PointerDown");
-        AnimatorState state = GetAnimatorState(animator, "PointerDown");
-        yield return new WaitForSecondsRealtime(clip.length / state.speed);
+        // AnimatorState state = GetAnimatorState(animator, "PointerDown");
+        float speed = 8;
+        yield return new WaitForSecondsRealtime(clip.length / speed);
 
         animator.SetBool("isPointerDown", false);
     }
@@ -64,8 +68,9 @@ public class AnimationUtility : MonoBehaviour {
         animator.SetBool("isWindowOpen", true);
 
         AnimationClip clip = GetAnimationClipInAnimator(animator, "Open");
-        AnimatorState state = GetAnimatorState(animator, "Open");
-        yield return new WaitForSecondsRealtime(clip.length / state.speed);
+        // AnimatorState state = GetAnimatorState(animator, "Open");
+        float speed = 4;
+        yield return new WaitForSecondsRealtime(clip.length / speed);
     }
 
     // 창 닫기
@@ -73,8 +78,9 @@ public class AnimationUtility : MonoBehaviour {
         animator.SetBool("isWindowOpen", false);
 
         AnimationClip clip = GetAnimationClipInAnimator(animator, "Close");
-        AnimatorState state = GetAnimatorState(animator, "Close");
-        yield return new WaitForSecondsRealtime(clip.length / state.speed);
+        // AnimatorState state = GetAnimatorState(animator, "Close");
+        float speed = 4;
+        yield return new WaitForSecondsRealtime(clip.length / speed);
 
         gameObject.SetActive(false);
     }

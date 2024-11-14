@@ -498,7 +498,7 @@ public class Player : MonoBehaviour, ILivingEntity {
 
 
         // 현재 체력 수치 적용
-        CurrentHealth = Mathf.Max(CurrentHealth - amount * (1 - damageReduction), 0);
+        CurrentHealth = Mathf.Max(CurrentHealth - (amount / 2) * (1 - damageReduction), 0);
 
         if (isGenerateBloodEffect) {
             // 파티클 재생

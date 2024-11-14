@@ -26,6 +26,7 @@ public class GasEffect : MonoBehaviour {
 
         ILivingEntity livingEntity = otherGameObject.GetComponent<ILivingEntity>();
         if (livingEntity == null) return;
+        if (livingEntity.IsDead) return;
 
         IMonster monster = otherGameObject.GetComponent<IMonster>();
         if (monster != null) return;

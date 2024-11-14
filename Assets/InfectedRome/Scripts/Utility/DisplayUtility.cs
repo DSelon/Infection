@@ -1,5 +1,5 @@
 using System.Collections;
-using UnityEditor.Animations;
+// using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,8 +15,9 @@ public class DisplayUtility : MonoBehaviour {
         animator.SetBool("isFadeIn", true);
 
         AnimationClip clip = AnimationUtility.GetAnimationClipInAnimator(animator, "FadeIn");
-        AnimatorState state = AnimationUtility.GetAnimatorState(animator, "FadeIn");
-        yield return new WaitForSecondsRealtime(clip.length / state.speed);
+        // AnimatorState state = AnimationUtility.GetAnimatorState(animator, "FadeIn");
+        float speed = 2;
+        yield return new WaitForSecondsRealtime(clip.length / speed);
 
         animator.SetBool("isFadeIn", false);
         blackDisplay.GetComponent<Image>().color = new Color(0, 0, 0, 1);
@@ -32,8 +33,9 @@ public class DisplayUtility : MonoBehaviour {
         animator.SetBool("isFadeOut", true);
 
         AnimationClip clip = AnimationUtility.GetAnimationClipInAnimator(animator, "FadeOut");
-        AnimatorState state = AnimationUtility.GetAnimatorState(animator, "FadeOut");
-        yield return new WaitForSecondsRealtime(clip.length / state.speed);
+        // AnimatorState state = AnimationUtility.GetAnimatorState(animator, "FadeOut");
+        float speed = 2;
+        yield return new WaitForSecondsRealtime(clip.length / speed);
 
         blackDisplay.SetActive(false);
         

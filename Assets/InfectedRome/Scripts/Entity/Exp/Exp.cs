@@ -1,5 +1,4 @@
 using UnityEngine;
-using VFolders.Libs;
 
 public class Exp : MonoBehaviour {
 	
@@ -18,7 +17,7 @@ public class Exp : MonoBehaviour {
         if (player == null) return;
 
         player.CurrentExp += amount;
-        gameObject.Destroy();
+        Destroy(gameObject);
     }
     
 }

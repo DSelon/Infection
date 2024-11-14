@@ -1,5 +1,6 @@
+using System;
 using System.Collections;
-using UnityEditor.Animations;
+// using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 using VInspector;
@@ -53,7 +54,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     [SerializeField] private AudioClip[] defeatMusics;
     [EndFoldout]
 
-    public GameProgress gameProgress;
+    [NonSerialized] public GameProgress gameProgress;
 
 
 
@@ -277,8 +278,9 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
         windowAnimator.SetBool("isWindowOpen", false);
 
         AnimationClip clip = AnimationUtility.GetAnimationClipInAnimator(windowAnimator, "Close");
-        AnimatorState state = AnimationUtility.GetAnimatorState(windowAnimator, "Close");
-        yield return new WaitForSecondsRealtime(clip.length / state.speed);
+        // AnimatorState state = AnimationUtility.GetAnimatorState(windowAnimator, "Close");
+        float speed = 4;
+        yield return new WaitForSecondsRealtime(clip.length / speed);
 
         pauseObject.SetActive(false);
         Time.timeScale = 1;
@@ -437,6 +439,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
         if (creep == null) return;
 
         creep.CreepDeath += OnCreepDeath;
+        creep.camera = player.Camera;
     }
     
     
@@ -482,7 +485,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
         yield return new WaitForSecondsRealtime(0.5f);
 
-        bgmSource.clip = defeatMusics[Random.Range(0, defeatMusics.Length)];
+        bgmSource.clip = defeatMusics[UnityEngine.Random.Range(0, defeatMusics.Length)];
         // bgmSource.clip = victoryMusics[Random.Range(0, victoryMusics.Length)];
         StartCoroutine(BGMUtility.CVolumeUp(bgmSource, 2.0f));
         bgmSource.Play();
@@ -524,7 +527,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
         yield return new WaitForSecondsRealtime(0.5f);
 
         // bgmSource.clip = defeatMusics[Random.Range(0, defeatMusics.Length)];
-        bgmSource.clip = victoryMusics[Random.Range(0, victoryMusics.Length)];
+        bgmSource.clip = victoryMusics[UnityEngine.Random.Range(0, victoryMusics.Length)];
         StartCoroutine(BGMUtility.CVolumeUp(bgmSource, 2.0f));
         bgmSource.Play();
 

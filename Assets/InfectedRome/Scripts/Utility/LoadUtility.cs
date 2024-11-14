@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+// using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -84,8 +84,9 @@ public class LoadUtility : MonoBehaviour {
         animator.SetBool("isShow", true);
 
         AnimationClip clip = AnimationUtility.GetAnimationClipInAnimator(animator, "Show");
-        AnimatorState state = AnimationUtility.GetAnimatorState(animator, "Show");
-        yield return new WaitForSecondsRealtime(clip.length / state.speed);
+        // AnimatorState state = AnimationUtility.GetAnimatorState(animator, "Show");
+        float speed = 4;
+        yield return new WaitForSecondsRealtime(clip.length / speed);
     }
 
     // 로딩 게이지 숨기기
@@ -93,8 +94,9 @@ public class LoadUtility : MonoBehaviour {
         animator.SetBool("isShow", false);
 
         AnimationClip clip = AnimationUtility.GetAnimationClipInAnimator(animator, "Hide");
-        AnimatorState state = AnimationUtility.GetAnimatorState(animator, "Hide");
-        yield return new WaitForSecondsRealtime(clip.length / state.speed);
+        // AnimatorState state = AnimationUtility.GetAnimatorState(animator, "Hide");
+        float speed = 4;
+        yield return new WaitForSecondsRealtime(clip.length / speed);
 
         gaugeObject.SetActive(false);
     }

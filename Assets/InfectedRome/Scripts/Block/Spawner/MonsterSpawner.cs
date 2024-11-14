@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MonsterSpawner : MonoBehaviour {
 
@@ -17,6 +18,9 @@ public class MonsterSpawner : MonoBehaviour {
     [field: SerializeField] public GameObject redZombie;
     [field: SerializeField] public GameObject venom;
     [field: SerializeField] public GameObject creep;
+
+    [field: Header("")]
+    [field: SerializeField] public GameObject magicCircleEffect;
 
     private List<GameObject> spawnedMonsters = new List<GameObject>();
     public List<GameObject> SpawnedMonsters {
@@ -81,6 +85,15 @@ public class MonsterSpawner : MonoBehaviour {
             spawnedMonster.GetComponent<IMonster>().Target = player; // 소환된 몬스터의 타겟 지정
 
             SpawnedMonsters.Add(spawnedMonster); // 소환된 몬스터 목록에 추가
+
+            // 파티클 생성
+            Vector3 magicCircleEffectPosition = spawnTransform[spawnerNumber].position;
+            magicCircleEffectPosition.y += 0.1f;
+            Quaternion magicCircleEffectRotation = magicCircleEffect.transform.rotation;
+            GameObject magicCircleEffectParticle = Instantiate(magicCircleEffect, magicCircleEffectPosition, magicCircleEffectRotation);
+            MagicCircleEffect magicCircleEffectScript = magicCircleEffectParticle.GetComponent<MagicCircleEffect>();
+            magicCircleEffectScript.size = 1;
+            Destroy(magicCircleEffectParticle, 2);
         }
 
         MonsterSpawn?.Invoke();

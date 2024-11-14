@@ -31,7 +31,6 @@ public class HealingAreaEffect : MonoBehaviour {
         GameObject otherGameObject = other.gameObject;
         Player player = otherGameObject.GetComponent<Player>();
         if (player == null) return;
-
         if (player.IsDead) return;
 
         player.Heal(heal * Time.deltaTime);

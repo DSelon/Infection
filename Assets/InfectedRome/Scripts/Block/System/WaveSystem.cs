@@ -1,6 +1,6 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WaveSystem : MonoBehaviour {
 
@@ -42,6 +42,7 @@ public class WaveSystem : MonoBehaviour {
         int spawnerCount = monsterSpawner.spawnTransform.Length;
         switch (waveNumber) {
             case 1:
+                StartCoroutine(CSpawnMonster(0, 0, 0, 1));
                 for (int j = 0; j < 24; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 1));
                 // for (int j = 0; j < 12; j += 4) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
                 // for (int j = 0; j < 15; j += 4) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
@@ -49,12 +50,14 @@ public class WaveSystem : MonoBehaviour {
                 yield return new WaitForSeconds(1);
                 break;
             case 2:
+                StartCoroutine(CSpawnMonster(0, 0, 0, 1));
                 for (int j = 0; j < 24; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 1));
-                for (int j = 0; j < 24; j += 3) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
+                for (int j = 0; j < 24; j += 4) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
 
                 yield return new WaitForSeconds(1);
                 break;
             case 3:
+                StartCoroutine(CSpawnMonster(0, 0, 0, 1));
                 for (int j = 0; j < 24; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 1));
                 for (int j = 0; j < 24; j += 3) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
                 for (int j = 0; j < 24; j += 6) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
@@ -62,16 +65,17 @@ public class WaveSystem : MonoBehaviour {
                 yield return new WaitForSeconds(1);
                 break;
             case 4:
-                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
-                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
-                for (int j = 0; j < 15; j += 3) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
+                StartCoroutine(CSpawnMonster(0, 0, 0, 1));
+                for (int j = 0; j < 24; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
+                for (int j = 0; j < 24; j += 2) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
+                for (int j = 0; j < 24; j += 4) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
 
                 yield return new WaitForSeconds(1);
                 break;
             case 5:
-                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
-                for (int j = 0; j < 12; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
-                for (int j = 0; j < 12; j += 3) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
+                for (int j = 0; j < 24; j += 1) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 0, 2));
+                for (int j = 0; j < 24; j += 2) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 2, 1));
+                for (int j = 0; j < 24; j += 4) for (int i = 0; i < 4; i++) StartCoroutine(CSpawnMonster(j, i, 1, 1));
 
                 StartCoroutine(CSpawnMonster(0, Random.Range(0, spawnerCount), 3));
 
@@ -101,8 +105,8 @@ public class WaveSystem : MonoBehaviour {
 
     private IEnumerator CPrintWaveText() {
         waveText.SetActive(true);
-        waveText.GetComponent<Text>().text = "Wave " + wave;
-        yield return new WaitForSeconds(3);
+        waveText.GetComponent<TextMeshProUGUI>().text = "Wave " + wave;
+        yield return new WaitForSeconds(5);
         waveText.SetActive(false);
     }
 

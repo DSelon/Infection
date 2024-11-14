@@ -4442,8 +4442,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Game Design, Programming\n\uACE0\uC131\uD604\n\n3D Player Character Model\n\uAE40\uC608\uD604\n\n3D
-    Background Model\n\uC815\uD604\uC218"
+  m_Text: "Design, Programming\n\uACE0\uC131\uD604\n\n3D Player Character Modeling\n\uAE40\uC608\uD604\n\n3D
+    Background Modeling\n\uC815\uD604\uC218"
 --- !u!222 &858024463
 CanvasRenderer:
   m_ObjectHideFlags: 0
