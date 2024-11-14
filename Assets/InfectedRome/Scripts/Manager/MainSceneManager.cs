@@ -14,6 +14,12 @@ public class MainSceneManager : Singleton<MainSceneManager> {
     [SerializeField] private GameObject loadGaugeObject;
     private GameObject loadGaugeAnimatorObject;
     private Image loadGaugeFillImage;
+    [SerializeField] private GameObject controlKeyButton;
+    [SerializeField] private GameObject controlKeyObject;
+    private Transform controlKeyWindowTransform;
+    [SerializeField] private GameObject creatorButton;
+    [SerializeField] private GameObject creatorObject;
+    private Transform creatorWindowTransform;
     [SerializeField] private GameObject optionButton;
     [SerializeField] private GameObject optionObject;
     private Transform optionWindowTransform;
@@ -35,6 +41,8 @@ public class MainSceneManager : Singleton<MainSceneManager> {
         seSource = camera.GetComponents<AudioSource>()[1];
         loadGaugeAnimatorObject = loadGaugeObject.transform.GetChild(1).gameObject;
         loadGaugeFillImage = loadGaugeAnimatorObject.transform.GetChild(1).GetComponent<Image>();
+        controlKeyWindowTransform = controlKeyObject.transform.GetChild(1);
+        creatorWindowTransform = creatorObject.transform.GetChild(1);
         optionWindowTransform = optionObject.transform.GetChild(1);
         optionBgmSlider = optionWindowTransform.GetChild(2).GetComponent<Slider>();
         optionSeSlider = optionWindowTransform.GetChild(3).GetComponent<Slider>();
@@ -105,6 +113,132 @@ public class MainSceneManager : Singleton<MainSceneManager> {
 
 
 
+    // 조작키 버튼 포인터 인
+    public void OnControlKeyButtonPointerEnter() {
+        Animator animator = controlKeyButton.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", true);
+
+        seSource.clip = buttonPointerSound;
+        seSource.Play();
+    }
+
+    // 조작키 버튼 포인트 아웃
+    public void OnControlKeyButtonPointerExit() {
+        Animator animator = controlKeyButton.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", false);
+    }
+
+    // 조작키 버튼 포인터 다운
+    public void OnControlKeyButtonPointerDown() {
+        StartCoroutine(COnControlKeyButtonPointerDown());
+    }
+
+    private IEnumerator COnControlKeyButtonPointerDown() {
+        Animator buttonAnimator = controlKeyButton.GetComponent<Animator>();
+
+        if (buttonAnimator.GetBool("isPointerDown")) yield break;
+
+
+
+        StartCoroutine(AnimationUtility.CPlayButtonPointerDownAnimation(buttonAnimator));
+
+        seSource.clip = buttonClickSound;
+        seSource.Play();
+
+        
+
+        Animator windowAnimator = controlKeyWindowTransform.GetComponent<Animator>();
+        yield return StartCoroutine(AnimationUtility.COpenWindow(controlKeyObject, windowAnimator));
+    }
+    
+    
+    
+    // 조작키 창 닫기 버튼 포인터 인
+    public void OnControlKey_CloseButtonPointerEnter() {
+        seSource.clip = buttonPointerSound;
+        seSource.Play();
+    }
+
+    // 조작키 창 닫기 버튼 포인터 다운
+    public void OnControlKey_CloseButtonPointerDown() {
+        StartCoroutine(COnControlKey_CloseButtonPointerDown());
+    }
+
+    private IEnumerator COnControlKey_CloseButtonPointerDown() {
+        seSource.clip = buttonClickSound;
+        seSource.Play();
+
+
+
+        Animator windowAnimator = controlKeyWindowTransform.GetComponent<Animator>();
+        yield return StartCoroutine(AnimationUtility.CCloseWindow(controlKeyObject, windowAnimator));
+    }
+
+
+
+    // 제작자 버튼 포인터 인
+    public void OnCreatorButtonPointerEnter() {
+        Animator animator = creatorButton.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", true);
+
+        seSource.clip = buttonPointerSound;
+        seSource.Play();
+    }
+
+    // 제작자 버튼 포인트 아웃
+    public void OnCreatorButtonPointerExit() {
+        Animator animator = creatorButton.GetComponent<Animator>();
+        animator.SetBool("isPointerEnter", false);
+    }
+
+    // 제작자 버튼 포인터 다운
+    public void OnCreatorButtonPointerDown() {
+        StartCoroutine(COnCreatorButtonPointerDown());
+    }
+
+    private IEnumerator COnCreatorButtonPointerDown() {
+        Animator buttonAnimator = creatorButton.GetComponent<Animator>();
+
+        if (buttonAnimator.GetBool("isPointerDown")) yield break;
+
+
+
+        StartCoroutine(AnimationUtility.CPlayButtonPointerDownAnimation(buttonAnimator));
+
+        seSource.clip = buttonClickSound;
+        seSource.Play();
+
+        
+
+        Animator windowAnimator = creatorWindowTransform.GetComponent<Animator>();
+        yield return StartCoroutine(AnimationUtility.COpenWindow(creatorObject, windowAnimator));
+    }
+    
+    
+    
+    // 제작자 창 닫기 버튼 포인터 인
+    public void OnCreator_CloseButtonPointerEnter() {
+        seSource.clip = buttonPointerSound;
+        seSource.Play();
+    }
+
+    // 제작자 창 닫기 버튼 포인터 다운
+    public void OnCreator_CloseButtonPointerDown() {
+        StartCoroutine(COnCreator_CloseButtonPointerDown());
+    }
+
+    private IEnumerator COnCreator_CloseButtonPointerDown() {
+        seSource.clip = buttonClickSound;
+        seSource.Play();
+
+
+
+        Animator windowAnimator = creatorWindowTransform.GetComponent<Animator>();
+        yield return StartCoroutine(AnimationUtility.CCloseWindow(creatorObject, windowAnimator));
+    }
+    
+    
+    
     // 옵션 버튼 포인터 인
     public void OnOptionButtonPointerEnter() {
         Animator animator = optionButton.GetComponent<Animator>();
@@ -189,8 +323,8 @@ public class MainSceneManager : Singleton<MainSceneManager> {
         seSource.volume = volume;
     }
 
-
-
+    
+    
     // 나가기 버튼 포인터 인
     public void OnExitButtonPointerEnter() {
         Animator animator = exitButton.GetComponent<Animator>();
