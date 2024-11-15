@@ -228,7 +228,7 @@ public class Venom : MonoBehaviour, ILivingEntity, IMonster {
     
     // 으르렁 사운드 재생
     private IEnumerator CMakeSound_Growl(AudioSource speaker, AudioClip[] growlSound) {
-        while (!IsDead) {
+        while (speaker != null && !IsDead) {
             speaker.clip = growlSound[Random.Range(0, growlSound.Length)];
             speaker.volume = PlayerPrefs.GetFloat("Option_SEVolume") / 8;
             speaker.Play();

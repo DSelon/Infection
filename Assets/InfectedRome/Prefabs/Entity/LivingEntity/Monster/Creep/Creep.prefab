@@ -2272,6 +2272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3854f83e1a2266b4e92ca021be1c6363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 0}
   bloodParticle: {fileID: 167524, guid: 56fb838631879a4458ee929c4b3f2b97, type: 3}
   jumpUpEffect: {fileID: 180820, guid: 5d0e08d60799be349b4bd1149c503c85, type: 3}
   jumpUpEffectTransform: {fileID: 2386147393002422359}
@@ -2283,6 +2284,8 @@ MonoBehaviour:
   flamethrowerEffectTransform: {fileID: 1023688424367094417}
   lightningStrikeEffect: {fileID: 123722, guid: 12477b93a937b0142b16e64e331a5dd5, type: 3}
   lightningStrikeEffectTransform: {fileID: 3717265388218539224}
+  hpFill: {fileID: 0}
+  hpText: {fileID: 0}
   deathSound: {fileID: 8300000, guid: 9c663d3d90576ba48be4e86e9cb710ec, type: 3}
   punchSounds:
   - {fileID: 8300000, guid: 9e8081d749858bb488e24a0ccc27c53d, type: 3}

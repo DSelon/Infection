@@ -18,11 +18,15 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     [SerializeField] private MonsterSpawner monsterSpawner;
     [SerializeField] private Player player;
     [SerializeField] private GameObject blackDisplay;
+    [SerializeField] private GameObject bossInfo;
+    [SerializeField] private Image bossHpFill;
+    [SerializeField] private Text bossHpText;
     [SerializeField] private GameObject treeObject;
     private GameObject treeCardBundle;
     private GameObject treeCard1Button;
     private GameObject treeCard2Button;
     private GameObject treeCard3Button;
+    private bool isTreeButtonPointerDown;
     [SerializeField] private GameObject pauseObject;
     private Transform pauseWindowTransform;
     private GameObject pauseBackToGameButton;
@@ -70,6 +74,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
         treeCard1Button = treeCardBundle.transform.GetChild(0).gameObject;
         treeCard2Button = treeCardBundle.transform.GetChild(1).gameObject;
         treeCard3Button = treeCardBundle.transform.GetChild(2).gameObject;
+        isTreeButtonPointerDown = false;
         pauseWindowTransform = pauseObject.transform.GetChild(1);
         pauseBackToGameButton = pauseWindowTransform.GetChild(0).gameObject;
         pauseExitToMainButton = pauseWindowTransform.GetChild(1).gameObject;
@@ -227,13 +232,19 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
     // 트리 창 버튼 포인터 다운
     private void OnTree_ButtonPointerDown(int number) {
 
+        if (isTreeButtonPointerDown) return;
+        isTreeButtonPointerDown = true;
+
         // 트리 능력 활성화
         player.ability.PickCard(number, player);
 
         // 트리 창 닫기
         Animator treeAnimator = treeCardBundle.GetComponent<Animator>();
         StartCoroutine(AnimationUtility.CCloseWindow(treeObject, treeAnimator));
-        CoroutineUtility.CallWaitForSecondsRealtime(0.25f, () => { Time.timeScale = 1; });
+        CoroutineUtility.CallWaitForSecondsRealtime(0.25f, () => {
+            isTreeButtonPointerDown = false;
+            Time.timeScale = 1;
+        });
 
     }
     
@@ -440,6 +451,9 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
         creep.CreepDeath += OnCreepDeath;
         creep.camera = player.Camera;
+        creep.hpFill = bossHpFill;
+        creep.hpText = bossHpText;
+        bossInfo.SetActive(true);
     }
     
     
@@ -552,7 +566,7 @@ public class RoomSceneManager : Singleton<RoomSceneManager> {
 
 
     private IEnumerator CTimeExpansionEffect() {
-        float timeScaleChangeSpeed = 0.3f;
+        float timeScaleChangeSpeed = 0.2f;
         float differenceTimeScale = Time.timeScale;
         float currentTimeScale = Time.timeScale;
         while (currentTimeScale > 0.2) {

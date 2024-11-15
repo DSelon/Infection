@@ -153,7 +153,7 @@ public class Player : MonoBehaviour, ILivingEntity {
         }
     }
     private int[] maxExp = {
-        100, 200, 300, 400, 500,
+        100, 300, 500, 700, 900,
         1100, 1200, 1300, 1400, 1500, 1600, 1000000
     };
     public int[] MaxExp {
@@ -498,7 +498,7 @@ public class Player : MonoBehaviour, ILivingEntity {
 
 
         // 현재 체력 수치 적용
-        CurrentHealth = Mathf.Max(CurrentHealth - (amount / 2) * (1 - damageReduction), 0);
+        CurrentHealth = Mathf.Max(CurrentHealth - (amount / 8) * (1 - damageReduction), 0);
 
         if (isGenerateBloodEffect) {
             // 파티클 재생

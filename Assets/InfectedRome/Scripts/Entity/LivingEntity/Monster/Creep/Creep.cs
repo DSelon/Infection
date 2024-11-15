@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
@@ -23,6 +24,10 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
             maxHealth = value;
             if (CurrentHealth < maxHealth) CurrentHealth = maxHealth;
+
+            // UI 갱신
+            hpFill.fillAmount = CurrentHealth / maxHealth;
+            hpText.text = (int) CurrentHealth + " / " + (int) maxHealth;
         }
 
     }
@@ -37,6 +42,10 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
             if (value < 0) value = 0;
 
             currentHealth = value > MaxHealth ? MaxHealth : value;
+
+            // UI 갱신
+            hpFill.fillAmount = CurrentHealth / maxHealth;
+            hpText.text = (int) CurrentHealth + " / " + (int) maxHealth;
 
             if (currentHealth <= MaxHealth / 2) {
                 animator.SetBool("isCrouch", true);
@@ -143,6 +152,8 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
     public GameObject lightningStrikeEffect;
     public Transform lightningStrikeEffectTransform;
     [Header("")]
+    public Image hpFill;
+    public Text hpText;
     public AudioClip deathSound;
     public AudioClip[] punchSounds = new AudioClip[2];
     public AudioClip[] eatSounds = new AudioClip[3];
@@ -192,7 +203,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
     // 스테이터스 초기화
     protected virtual void StatusInit() {
-        MaxHealth = 1000;
+        MaxHealth = 1000 - 200;
         CurrentHealth = MaxHealth;
         MoveSpeed = 2.5f;
         IsDead = MaxHealth > 0 ? false : true;
