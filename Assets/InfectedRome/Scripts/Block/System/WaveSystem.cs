@@ -93,6 +93,8 @@ public class WaveSystem : MonoBehaviour {
     private IEnumerator CCheck() {
         while (true) {
             if (monsterSpawner.SpawnedMonsters.Count == 0) {
+                if (wave == 5) break;
+
                 wave++;
                 StartCoroutine(CRunWave(wave));
 
