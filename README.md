@@ -7,6 +7,7 @@ Unity graduation work game project
 * Creep Horror Creature
 * Epic Toon FX
 * 5800 Fantasy RPG Icons Pack
+* Joystick Pack
 * Medieval Kingdom UI
 * Morbid Creatures: Mutant 1
 * Nodachi AnimSet
