@@ -10,6 +10,12 @@ public class TitleSceneManager : Singleton<TitleSceneManager> {
     }
 
     private IEnumerator CStart() {
+        if (PlayerPrefs.GetInt("Option_IsFirstJoin") == 0) {
+            PlayerPrefs.SetInt("Option_IsFirstJoin", 1);
+            PlayerPrefs.SetFloat("Option_BGMVolume", 0.5f);
+            PlayerPrefs.SetFloat("Option_SEVolume", 0.5f);
+        }
+
         string sceneName = "Main";
         yield return StartCoroutine(LoadUtility.CLoadScene(sceneName));
 

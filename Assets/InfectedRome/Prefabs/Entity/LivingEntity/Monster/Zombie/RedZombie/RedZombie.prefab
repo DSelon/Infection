@@ -1487,16 +1487,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Zombie_RightLeg'\n\tTransform 'Zombie_RightUpLeg'\n\tTransform
-    'Zombie_RightForeArm'\n\tTransform 'Zombie_LeftForeArm'\n\tTransform 'Zombie_Spine2'\n\tTransform
-    'Zombie_LeftLeg'\n\tTransform 'Zombie_Head'\n\tTransform 'Zombie_Spine'\n\tTransform
-    'Zombie_LeftUpLeg'\n\tTransform 'Zombie_Hips'\n\tand more ...\n\tFrom animation
-    clip 'idle1'\n\tFrom animation clip 'idle2'\n\tFrom animation clip 'idle1'\n\tFrom
-    animation clip 'walk'\n\tFrom animation clip 'walk'\n\tFrom animation clip 'run'\n\tFrom
-    animation clip 'roar'\n\tFrom animation clip 'run'\n\tFrom animation clip 'atack1'\n\tFrom
-    animation clip 'atack2'\n\tand more ..."
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
