@@ -53,6 +53,8 @@ MonoBehaviour:
     - ac06916387fa4694cbf254636a1d00f4
     - af9fb52d6dc3e274abde5a8377bf01af
     - a57ade0982b874e48ac140f5c4a4e006
+    - 4367e9e2bb34a7e45910cc5f59b4bb94
+    - b7100c97b8360e743831ccf541dbb7b2
     values:
     - iconNameOrGuid: cs Script Icon
       colorIndex: 0
@@ -160,6 +162,14 @@ MonoBehaviour:
       isColorRecursive: 0
     - iconNameOrGuid: RawImage Icon
       colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 3
       isIconRecursive: 0
       isColorRecursive: 0
     - iconNameOrGuid: 
