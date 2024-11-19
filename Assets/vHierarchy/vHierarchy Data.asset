@@ -121,6 +121,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-976600420-0
         - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-582484534-0
         - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-646346703-0
+        - globalObjectIdString: GlobalObjectId_V1-2-3196eb576d5099c4cbcbb0ce6a225ec2-646835081-0
         values:
         - colorIndex: 0
           iconNameOrGuid: Camera Icon
@@ -136,6 +137,8 @@ MonoBehaviour:
           iconNameOrGuid: Terrain Icon
         - colorIndex: 0
           iconNameOrGuid: Light Icon
+        - colorIndex: 0
+          iconNameOrGuid: Terrain Icon
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-2-21f6f9480c0fcba4f9630576860e65e4-1687311599-0
