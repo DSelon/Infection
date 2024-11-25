@@ -203,7 +203,7 @@ public class Creep : MonoBehaviour, ILivingEntity, IMonster {
 
     // 스테이터스 초기화
     protected virtual void StatusInit() {
-        MaxHealth = 1000 - 200;
+        MaxHealth = 1200 /*- 200*/;
         CurrentHealth = MaxHealth;
         MoveSpeed = 2.5f;
         IsDead = MaxHealth > 0 ? false : true;
