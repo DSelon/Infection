@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/InfectedRome/Scenes/Title.unity
     guid: f39ae5644f60b664c9fe35fb09fd879a
   - enabled: 1
-    path: Assets/InfectedRome/Scenes/Main.unity
+    path: Assets/Infection/Scenes/Main.unity
     guid: 3196eb576d5099c4cbcbb0ce6a225ec2
   - enabled: 1
-    path: Assets/InfectedRome/Scenes/Room.unity
+    path: Assets/Infection/Scenes/Room.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
