@@ -30,7 +30,7 @@ ___
 
 ### 작동 영상
 
- https://blog.naver.com/cgko321/223679401063
+https://blog.naver.com/cgko321/223679401063
 
 ___
 
@@ -77,7 +77,7 @@ ___
 |Assets \ Infection \ Materials|재료 폴더|
 |Assets \ Infection \ Models|3D 모델 폴더|
 |Assets \ Infection \ Particles|파티클 폴더|
-|Assets \ Infection \ Prefabs|프리펩 폴더|
+|Assets \ Infection \ Prefabs|프리팹 폴더|
 |Assets \ Infection \ Scenes|씬 폴더|
 |Assets \ Infection \ Scripts|스크립트 폴더|
 
@@ -179,5 +179,13 @@ ___
 |LoadUtility|로딩 기능 클래스|
 
 ___
-\
-작성 예정...
+
+### 핵심 기능
+
+___
+
+### 문제 & 해결 과정
+
+___
+
+### 부족한 점
