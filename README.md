@@ -182,10 +182,181 @@ ___
 
 ### 핵심 기능
 
-___
+#### Singleton 패턴 활용
 
-### 문제 & 해결 과정
+##### Singleton.cs
 
-___
+```C#
 
-### 부족한 점
+using UnityEngine;
+
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
+    
+    private static T instance;
+    public static T Instance {
+        get {
+            if (instance == null) {
+
+                instance = (T) FindObjectOfType(typeof(T));
+                if (instance == null) {
+                    GameObject gameObject = new GameObject(typeof(T).Name, typeof(T));
+                    instance = gameObject.GetComponent<T>();
+                }
+
+            }
+
+            return instance;
+        }
+    }
+
+}
+
+```
+
+싱글톤 패턴을 상속을 통해 사용할 수 있게 만든 코드이다.\
+제너릭과 제약조건 where을 활용해서 만든 코드로,\
+MonoBehaviour 클래스를 상속받고 있는 클래스라면 해당 코드를 상속받아 사용할 수 있다.\
+입력된 타입을 가진 객체를 찾고, 없으면 객체를 새로 생성하여, instance 변수에 초기화하는 방식이다.
+
+#### 능력 구현
+
+플레이어의 능력은 '능력 시전 → 능력 효과 생성 → 효과 기능 수행' 단계를 거쳐서 수행된다.\
+이에 맞춰 클래스 역시 3구역(PlayerAbility, Ability, Effect)으로 나누었다.
+
+|구역|용도|
+|:--|:--|
+|Entity \ LivingEntity \ Player \ PlayerAbility.cs|능력의 설명/아이콘이 담겨 있고, 능력 선택 기능을 수행|
+|Entity \ LivingEntity \ Player \ Ability \ ...Ability.cs|능력의 재사용 대기 시간/시전 속도가 담겨 있고, 능력 사용 시 애니메이션 재생/시전 효과음 재생/능력 효과 생성을 수행|
+|Entity \ Effect \ ...Effect.cs|능력 효과의 크기/피해량 등이 담겨 있고, 능력 효과의 충돌 감지 후 피해를 가하는 기능을 수행|
+
+3구역으로 나누어서 구현하였기에,\
+능력별로 애니메이션/효과음/효과/효과 기능이 다르더라도 대응하여 개발할 수 있다.
+
+#### 카메라 진동 효과
+
+카메라가 플레이어를 추적할 수 있도록 아래와 같이 코드를 작성하였다.
+
+##### PlayerMovement.cs
+
+```C#
+
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour {
+
+    // 카메라 추적
+    public void FollowCamera(Player player, Vector3 cameraPosition) {
+        Vector3 position = player.transform.position;
+
+        player.Camera.transform.position = Vector3.Lerp(cameraPosition, new Vector3(
+            position.x + player.cameraOffsetPosition.x,
+            position.y + player.cameraOffsetPosition.y,
+            position.z + player.cameraOffsetPosition.z
+            ), player.CameraFollowSpeed * Time.deltaTime);
+    }
+
+    ...
+
+}
+
+```
+
+Vector3.Lerp()를 사용하여 카메라가 부드럽게 플레이어를 따라가도록 구현하였다.\
+카메라의 위치가 갑작스럽게 바뀌더라도, 자연스럽게 플레이어를 다시 추적한다.\
+그렇기에 카메라 진동 효과를 구현할 때, 카메라의 위치만 바꿔주면 되기에 굉장히 간편하다.\
+아래는 카메라 위치를 변경하여 카메라 진동 효과를 준 코드이다.
+
+##### Creep.cs
+
+```C#
+
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
+
+public class Creep : MonoBehaviour, ILivingEntity, IMonster {
+
+    ...
+
+    // JumpDown
+    private IEnumerator JumpDown() {
+
+        ...
+
+        // 카메라 흔들림 효과 부여
+        Transform cameraTransform = camera.transform;
+        Vector3 cameraPosition = cameraTransform.position;
+        cameraTransform.position = new Vector3(cameraPosition.x, cameraPosition.y + 1.5f, cameraPosition.z);
+        CoroutineUtility.CallWaitForSeconds(0.25f, () => {
+            cameraPosition = cameraTransform.position;
+            cameraTransform.position = new Vector3(cameraPosition.x, cameraPosition.y + 0.75f, cameraPosition.z);
+        });
+
+        ...
+
+    }
+
+    ...
+
+}
+
+```
+
+#### 게임 종료 효과
+
+게임이 종료될 때, 시간이 느려지는 효과를 주고 싶었다.\
+시간이 느려지는 효과를 주기 위하여 아래의 코드를 작성하였다.
+
+##### RoomSceneManager.cs
+
+```C#
+
+using System;
+using System.Collections;
+// using UnityEditor.Animations;
+using UnityEngine;
+using UnityEngine.UI;
+using VInspector;
+
+public class RoomSceneManager : Singleton<RoomSceneManager> {
+
+    ...
+
+    private IEnumerator COnPlayerDeath() {
+
+        StartCoroutine(CTimeExpansionEffect());
+
+        ...
+
+    }
+
+    ...
+
+    private IEnumerator COnCreepDeath() {
+
+        StartCoroutine(CTimeExpansionEffect());
+
+        ...
+
+    }
+
+    private IEnumerator CTimeExpansionEffect() {
+        float timeScaleChangeSpeed = 0.2f;
+        float differenceTimeScale = Time.timeScale;
+        float currentTimeScale = Time.timeScale;
+        while (currentTimeScale > 0.2) {
+            currentTimeScale -= differenceTimeScale * timeScaleChangeSpeed * Time.unscaledDeltaTime;
+            Time.timeScale = currentTimeScale;
+
+            yield return null;
+        }
+        Time.timeScale = 0.2f;
+    }
+
+}
+
+```
+
+Coroutine을 사용하여 Time.timeScale을 서서히 변경시켜주는 방식으로 시간이 느려지는 효과를 구현하였다.
